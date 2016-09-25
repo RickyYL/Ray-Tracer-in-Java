@@ -2,6 +2,7 @@ package world;
 
 /**
  * @author Yuanqi Li
+ * @version 0.2
  */
 public class ViewPlane {
 

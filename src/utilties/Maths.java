@@ -2,7 +2,7 @@ package utilties;
 
 /**
  * @author Yuanqi Li
- * @version 0.1
+ * @version 0.2
  */
 public class Maths {
 

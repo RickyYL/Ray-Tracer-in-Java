@@ -8,6 +8,7 @@ public class Normal {
 
     double x = 0, y = 0, z = 0;
 
+    public Normal() { }
     public Normal(double a) { x = a; y = a; z = a; }
     public Normal(double a, double b, double c) { x = a; y = b; z = c; }
     public Normal(final Normal n) {x = n.x; y = n.y; z = n.z; }

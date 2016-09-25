@@ -2,7 +2,7 @@ import world.World;
 
 /**
  * @author Yuanqi Li
- * @version 0.1
+ * @version 0.2
  */
 public class Main {
     public static void main(String... args) {

@@ -2,6 +2,7 @@ package world;
 
 import geometrics.GeometricObject;
 import geometrics.Sphere;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import tracers.SingleSphere;
 import tracers.Tracer;
 import utilties.*;
@@ -11,7 +12,7 @@ import java.util.Vector;
 
 /**
  * @author Yuanqi Li
- * @version 0.1
+ * @version 0.2
  */
 public class World {
 
@@ -48,9 +49,36 @@ public class World {
         return sr;
     }
 
-    public void renderScene(){}
-    public void openWindow(int hres, int vres){}
-    public void displayPixel(int row, int column, RgbColor pixelColor){}
+    public void renderScene() {
+        RgbColor pixelColor;
+        Ray      ray = new Ray();
+        double   zw = 100.0;
+        double   x, y;
+
+        openWindow(vp.hres, vp.vres);
+
+        for (int r = 0; r < vp.vres; r++) {
+            for (int c = 0; c <= vp.hres; c++) {
+                x = vp.getPixelSize() * (c - 0.5 * (vp.hres - 1.0));
+                y = vp.getPixelSize() * (r - 0.5 * (vp.vres - 1.0));
+                ray.setOrigin(new Point3D(x, y, zw));
+                pixelColor = tracer.trace(ray);
+                displayPixel(r, c, pixelColor);
+            }
+            System.out.println("");
+        }
+    }
+
+    public void openWindow(int hres, int vres) {
+
+    }
+
+    public void displayPixel(int row, int column, RgbColor pixelColor) {
+        if (pixelColor.equals(pixelColor.RED))
+            System.out.print(".");
+        else
+            System.out.print(" ");
+    }
 
     public RgbColor getBackgroundColor() {
         return backgroundColor;

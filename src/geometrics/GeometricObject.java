@@ -5,7 +5,8 @@ import utilties.RgbColor;
 import utilties.ShadeRec;
 
 /**
- * Created by yuanqi on 9/24/16.
+ * @author Yuanqi Li
+ * @version 0.2
  */
 public abstract class GeometricObject {
 

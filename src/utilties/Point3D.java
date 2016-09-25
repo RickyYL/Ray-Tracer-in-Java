@@ -4,12 +4,13 @@ import org.omg.PortableServer.POA;
 
 /**
  * @author Yuanqi Li
- * @version 0.1
+ * @version 0.2
  */
 public class Point3D {
 
     double x = 0, y = 0, z = 0;
 
+    public Point3D() { }
     public Point3D(double a) {
         x = a; y = a; z = a;
     }

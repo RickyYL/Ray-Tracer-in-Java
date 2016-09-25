@@ -2,11 +2,15 @@ package utilties;
 
 /**
  * @author Yuanqi Li
+ * @version 0.2
  */
 public class Ray {
 
-    Point3D  origin;
-    Vector3D direction;
+    Point3D  origin = new Point3D(0, 0, 0);
+    Vector3D direction = new Vector3D(0, 0, -1);
+
+    public Ray() {
+    }
 
     public Ray(Point3D origin, Vector3D direction) {
         this.origin = origin;
