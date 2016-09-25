@@ -3,35 +3,35 @@ package utilties;
 import world.World;
 
 /**
- * Created by yuanqi on 9/24/16.
+ * @author Yuanqi Li
+ * @version 0.1
  */
 public class ShadeRec {
 
-    boolean  isHit;
-    Point3D  localHitPoint;
-    Normal   normal;
-    RgbColor color;
+    boolean  isHit = false;
+    Point3D  localHitPoint = new Point3D();
+    Normal   normal = new Normal();
+    RgbColor color = RgbColor.BLACK;
     World    world;
 
-    public ShadeRec(World wr) {
-        isHit = false;
-        color = black;
-        world = wr;
+    public ShadeRec(World w) {
+        world = w;
     }
 
     public boolean isHit() {
         return isHit;
     }
-
     public void setHit(boolean hit) {
         isHit = hit;
     }
-
     public RgbColor getColor() {
         return color;
     }
-
     public void setColor(RgbColor color) {
         this.color = color;
     }
+    public Normal getNormal() { return normal; }
+    public void setNormal(Normal normal) { this.normal = normal;}
+    public Point3D getLocalHitPoint() { return localHitPoint; }
+    public void setLocalHitPoint(Point3D localHitPoint) { this.localHitPoint = localHitPoint; }
 }
