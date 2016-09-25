@@ -7,13 +7,20 @@ import world.World;
 
 /**
  * @author Yuanqi Li
+ * @version 0.1
  */
-public class MultipleObjects {
+public class MultipleObjects extends Tracer {
 
-    World world;
+    public MultipleObjects(World w) {
+        super(w);
+    }
 
-    public RgbColor trace(final Ray ray) {
+    @Override
+    public RgbColor trace(Ray ray) {
         ShadeRec sr = world.hitBareBonesObjects(ray);
-        return sr.isHit() ? sr.getColor() : world.getBackgroundColor();
+        if (sr.isHit())
+            return sr.getColor();
+        else
+            return world.getBackgroundColor();
     }
 }

@@ -11,6 +11,7 @@ import java.util.Vector;
 
 /**
  * @author Yuanqi Li
+ * @version 0.1
  */
 public class World {
 
@@ -50,10 +51,28 @@ public class World {
     public void renderScene(){}
     public void openWindow(int hres, int vres){}
     public void displayPixel(int row, int column, RgbColor pixelColor){}
+
     public RgbColor getBackgroundColor() {
         return backgroundColor;
     }
+
     public void setBackgroundColor(RgbColor backgroundColor) {
         this.backgroundColor = backgroundColor;
+    }
+
+    public Sphere getSphere() {
+        return sphere;
+    }
+
+    public void setSphere(Sphere sphere) {
+        this.sphere = sphere;
+    }
+
+    public List<GeometricObject> getObjects() {
+        return objects;
+    }
+
+    public void setObjects(List<GeometricObject> objects) {
+        this.objects = objects;
     }
 }

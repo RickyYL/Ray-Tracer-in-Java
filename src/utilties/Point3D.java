@@ -8,12 +8,17 @@ import org.omg.PortableServer.POA;
  */
 public class Point3D {
 
-    double x, y, z;
+    double x = 0, y = 0, z = 0;
 
-    public Point3D() { x = 0; y = 0; z = 0; }
-    public Point3D(double a) { x = a; y = a; z = a; }
-    public Point3D(double a, double b, double c) { x = a; y = b; z = c; }
-    public Point3D(final Point3D p) { x = p.x; y = p.y; z = p.z; }
+    public Point3D(double a) {
+        x = a; y = a; z = a;
+    }
+    public Point3D(double a, double b, double c) {
+        x = a; y = b; z = c;
+    }
+    public Point3D(final Point3D p) {
+        x = p.x; y = p.y; z = p.z;
+    }
 
     public Point3D  neg() {
         return new Point3D(-x, -y, -z);
@@ -30,14 +35,10 @@ public class Point3D {
     public Point3D  mul(double a) {
         return new Point3D(x * a, y * a, z * a);
     }
-
-    public double
-    distance(Point3D p) {
+    public double   distance(Point3D p) {
         return this.sub(p).norm();
     }
-
-    public double
-    distanceSquare(Point3D p) {
+    public double   distanceSquare(Point3D p) {
         return this.sub(p).normSquare();
     }
 

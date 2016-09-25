@@ -7,9 +7,8 @@ package utilties;
 
 public class Vector3D {
 
-    double x, y, z;
+    double x = 0, y = 0, z = 0;
 
-    public Vector3D() { x = 0; y = 0; z = 0; }
     public Vector3D(double a) { x = a; y = a; z = a; }
     public Vector3D(double a, double b, double c) { x = a; y = b; z = c; }
     public Vector3D(final Vector3D v) { x = v.x; y = v.y; z = v.z; }

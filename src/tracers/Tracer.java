@@ -1,7 +1,24 @@
 package tracers;
 
+import utilties.Ray;
+import utilties.RgbColor;
+import world.World;
+
 /**
- * Created by yuanqi on 9/24/16.
+ * @author Yuanqi Li
+ * @version 0.1
  */
-public class Tracer {
+public abstract class Tracer {
+
+    World world = null;
+
+    public Tracer() {}
+
+    public Tracer(World w) {
+        world = w;
+    }
+
+    public RgbColor trace(final Ray ray) {
+        return RgbColor.BLACK;
+    }
 }
