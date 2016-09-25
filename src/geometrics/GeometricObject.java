@@ -9,14 +9,13 @@ import utilties.ShadeRec;
  */
 public abstract class GeometricObject {
 
-    abstract public boolean hit(final Ray ray, double tmin, ShadeRec sr);
-
     RgbColor color;
+
+    abstract public boolean hit(final Ray ray, double tmin, ShadeRec sr);
 
     public RgbColor getColor() {
         return color;
     }
-
     public void setColor(RgbColor color) {
         this.color = color;
     }
