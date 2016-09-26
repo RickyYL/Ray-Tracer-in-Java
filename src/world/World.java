@@ -1,14 +1,11 @@
 package world;
 
-import geometrics.GeometricObject;
-import geometrics.Sphere;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-import tracers.SingleSphere;
-import tracers.Tracer;
+import geometrics.*;
+import tracers.*;
 import utilties.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @author Yuanqi Li
@@ -16,20 +13,14 @@ import java.util.Vector;
  */
 public class World {
 
-    ViewPlane             vp;
-    RgbColor              backgroundColor;
-    Tracer                tracer;
+    private ViewPlane             vp;
+    private RgbColor              backgroundColor = RgbColor.BLACK;
+    private Tracer                tracer  = new MultipleObjects(this);
+    private List<GeometricObject> objects = new ArrayList<>();
+    private Sphere                sphere;
 
-    Sphere                sphere;
-    List<GeometricObject> objects;
-
-    public World(){}
-
-    public void build() {
-        vp = new ViewPlane(200, 200, 1.0f, 1.0f);
-        backgroundColor = RgbColor.BLACK;
-        tracer = new SingleSphere(this);
-        sphere = new Sphere(new Point3D(0, 0, 0), 85.0);
+    public World(ViewPlane vp) {
+        this.vp = vp;
     }
 
     public void addObject(GeometricObject object) {
@@ -55,12 +46,12 @@ public class World {
         double   zw = 100.0;
         double   x, y;
 
-        openWindow(vp.hres, vp.vres);
+        openWindow(vp.getHres(), vp.getVres());
 
-        for (int r = 0; r < vp.vres; r++) {
-            for (int c = 0; c <= vp.hres; c++) {
-                x = vp.getPixelSize() * (c - 0.5 * (vp.hres - 1.0));
-                y = vp.getPixelSize() * (r - 0.5 * (vp.vres - 1.0));
+        for (int r = 0; r < vp.getVres(); r++) {
+            for (int c = 0; c <= vp.getHres(); c++) {
+                x = vp.getPixelSize() * (c - 0.5 * (vp.getHres() - 1.0));
+                y = vp.getPixelSize() * (r - 0.5 * (vp.getVres() - 1.0));
                 ray.setOrigin(new Point3D(x, y, zw));
                 pixelColor = tracer.trace(ray);
                 displayPixel(r, c, pixelColor);
@@ -74,32 +65,31 @@ public class World {
     }
 
     public void displayPixel(int row, int column, RgbColor pixelColor) {
-        if (pixelColor.equals(pixelColor.RED))
-            System.out.print(".");
-        else
-            System.out.print(" ");
+        if (pixelColor.equals(RgbColor.RED)) {
+            System.out.print(Console.ANSI_RED + "**" + Console.ANSI_RESET);
+        } else if (pixelColor.equals(RgbColor.GREEN)) {
+            System.out.print(Console.ANSI_GREEN + "**" + Console.ANSI_RESET);
+        } else if (pixelColor.equals(RgbColor.BLUE)) {
+            System.out.print(Console.ANSI_BLUE + "**" + Console.ANSI_RESET);
+        } else
+            System.out.print("  ");
     }
 
     public RgbColor getBackgroundColor() {
         return backgroundColor;
     }
-
     public void setBackgroundColor(RgbColor backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
-
     public Sphere getSphere() {
         return sphere;
     }
-
     public void setSphere(Sphere sphere) {
         this.sphere = sphere;
     }
-
     public List<GeometricObject> getObjects() {
         return objects;
     }
-
     public void setObjects(List<GeometricObject> objects) {
         this.objects = objects;
     }

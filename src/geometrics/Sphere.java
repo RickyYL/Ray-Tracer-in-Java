@@ -11,7 +11,16 @@ public class Sphere extends GeometricObject {
     Point3D center;
     double  radius;
 
-    public Sphere(Point3D c, double r) { center = c; radius = r; }
+    public Sphere(Point3D c, double r) {
+        center = c;
+        radius = r;
+    }
+
+    public Sphere(Point3D c, double r, RgbColor co) {
+        center = c;
+        radius = r;
+        color = co;
+    }
 
     @Override
     public boolean hit(Ray ray, double tmin, ShadeRec sr) {

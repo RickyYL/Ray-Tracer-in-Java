@@ -16,6 +16,12 @@ public class Plane extends GeometricObject {
         this.normal = normal;
     }
 
+    public Plane(Point3D point, Normal normal, RgbColor color) {
+        this.point = point;
+        this.normal = normal;
+        super.color = color;
+    }
+
     @Override
     public boolean hit(Ray ray, double tmin, ShadeRec sr) {
         double t = point.sub(ray.getOrigin()).dotProduct(normal) / (ray.getDirection().dotProduct(normal));

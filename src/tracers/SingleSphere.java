@@ -20,7 +20,7 @@ public class SingleSphere extends Tracer {
         ShadeRec sr = new ShadeRec(world);
         double   t = 0;
         if (world.getSphere().hit(ray, t, sr))
-            return RgbColor.RED;
+            return world.getSphere().getColor();
         else
             return RgbColor.BLACK;
     }

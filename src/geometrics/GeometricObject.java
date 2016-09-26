@@ -10,7 +10,7 @@ import utilties.ShadeRec;
  */
 public abstract class GeometricObject {
 
-    RgbColor color;
+    RgbColor color = RgbColor.RED;
 
     abstract public boolean hit(final Ray ray, double tmin, ShadeRec sr);
 

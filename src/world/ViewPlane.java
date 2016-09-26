@@ -6,13 +6,14 @@ package world;
  */
 public class ViewPlane {
 
-    int hres;
-    int vres;
-    float pixelSize;
-    float gamma;
-    float invGamma;
+    private int    hres;
+    private int    vres;
+    private double pixelSize;
+    private double gamma;
+    private double invGamma;
+    private int    numSamples;
 
-    public ViewPlane(int hres, int vres, float pixelSize, float gamma) {
+    public ViewPlane(int hres, int vres, double pixelSize, double gamma, int numSamples) {
         this.hres = hres;
         this.vres = vres;
         this.pixelSize = pixelSize;
@@ -36,7 +37,7 @@ public class ViewPlane {
         this.vres = vres;
     }
 
-    public float getPixelSize() {
+    public double getPixelSize() {
         return pixelSize;
     }
 
@@ -44,7 +45,7 @@ public class ViewPlane {
         this.pixelSize = pixelSize;
     }
 
-    public float getGamma() {
+    public double getGamma() {
         return gamma;
     }
 
@@ -52,7 +53,7 @@ public class ViewPlane {
         this.gamma = gamma;
     }
 
-    public float getInvGamma() {
+    public double getInvGamma() {
         return invGamma;
     }
 
