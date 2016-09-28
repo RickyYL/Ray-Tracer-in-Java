@@ -11,7 +11,7 @@ public class Random extends Sampler {
     }
 
     @Override
-    void generateSamples() {
+    public void generateSamples() {
 
     }
 }

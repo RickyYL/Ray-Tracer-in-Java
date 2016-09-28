@@ -12,7 +12,7 @@ public class Regular extends Sampler {
 
     // TODO
     @Override
-    void generateSamples() {
+    public void generateSamples() {
 
     }
 }

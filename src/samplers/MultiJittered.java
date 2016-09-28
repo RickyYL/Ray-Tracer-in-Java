@@ -11,7 +11,7 @@ public class MultiJittered extends Sampler {
     }
 
     @Override
-    void generateSamples() {
+    public void generateSamples() {
 
     }
 }
