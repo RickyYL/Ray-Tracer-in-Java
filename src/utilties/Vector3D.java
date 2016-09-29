@@ -43,11 +43,12 @@ public class Vector3D {
     public double normSquare() {
         return x * x + y * y + z * z;
     }
-    public void normalize() {
+    public Vector3D normalize() {
         double norm = norm();
         x = x / norm;
         y = y / norm;
         z = z / norm;
+        return this;
     }
 
     @Override

@@ -23,6 +23,8 @@ public class RgbColor {
     public RgbColor div(double a)   { return new RgbColor(r / a, g / a, b / a); }
     public RgbColor pow(double a)   { return new RgbColor(Math.pow(r, a), Math.pow(g, a), Math.pow(b, a)); }
 
+    public int toInt() { return ((int)r << 16) | ((int)g << 8) | (int)b; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
