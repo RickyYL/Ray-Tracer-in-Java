@@ -1,5 +1,6 @@
 package samplers;
 
+import utilties.Maths;
 import utilties.Point2D;
 
 import java.util.Arrays;
@@ -11,9 +12,9 @@ import java.util.List;
  */
 abstract public class Sampler {
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Fields
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     /**
      * The number of sample points in a pattern.
@@ -21,9 +22,10 @@ abstract public class Sampler {
     int numSamples;
 
     /**
-     * The number of sample sets (patterns) stored.
+     * The number of sample sets (patterns) stored. The default value is 83, which has nothing
+     * special but only a prime.
      */
-    int numSets;
+    int numSets = 83;
 
     /**
      * The current number of sample points used. It is initialized to zero when a
@@ -77,12 +79,6 @@ abstract public class Sampler {
 \*--------------------------------------------------------------*/
 
     /**
-     * Generates sample patterns in a unit square, stored in data field <code>squareSamples</code>.
-     * Each subclass has to override this method.
-     */
-    abstract public void generateSamples();
-
-    /**
      * Sets up the randomly shuffled indices.
      */
     public void setupShuffledIndices() {
@@ -95,6 +91,12 @@ abstract public class Sampler {
     public void shuffleSamples() {
 
     }
+
+    /**
+     * Generates sample patterns in a unit square, stored in data field <code>squareSamples</code>.
+     * Each subclass has to override this method.
+     */
+    abstract public void generateSamples();
 
     /**
      * TODO
@@ -156,15 +158,31 @@ abstract public class Sampler {
      * @return the next sample point stored in the sampler object.
      */
     public Point2D nextSampleOnUnitSquare() {
-        return squareSamples.get((int) count++ % (numSamples * numSets));
+        if (count % numSamples == 0)
+            jump = Maths.randInt() % numSets;
+        return squareSamples.get(jump + (int) (count++ % numSamples));
     }
 
+    /**
+     * Returns sample points in a unit disk. It is caller's responsibility to first call
+     * <code>mapSamplesToUnitDisk</code>.
+     * @return the next sample point in a unit disk stored in the sampler object.
+     */
     public Point2D nextSampleOnUnitDisk() {
-        return diskSamples.get((int) count++ % (numSamples * numSets));
+        if (count % numSamples == 0)
+            jump = Maths.randInt() % numSets;
+        return diskSamples.get(jump + (int) (count++ % numSamples));
     }
 
+    /**
+     * Returns sample points in a hemisphere. It is caller's responsibility to first call
+     * <code>mapSamplesToHemisphere</code>.
+     * @return the next sample point in a unit disk stored in the sampler object.
+     */
     public Point2D nextSampleOnHemisphere() {
-        return hemisphereSamples.get((int) count++ % (numSamples * numSets));
+        if (count % numSamples == 0)
+            jump = Maths.randInt() % numSets;
+        return hemisphereSamples.get(jump + (int) (count++ % numSamples));
     }
 
 /*--------------------------------------------------------------*\

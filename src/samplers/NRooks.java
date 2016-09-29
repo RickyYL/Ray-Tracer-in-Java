@@ -3,26 +3,45 @@ package samplers;
 import utilties.Maths;
 import utilties.Point2D;
 
+import java.util.stream.Collectors;
+
 /**
  * @author Yuanqi Li
  * @version 0.5
  */
 public class NRooks extends Sampler {
 
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Constructors
+\*--------------------------------------------------------------------------------------------------------------------*/
+
     public NRooks(int numSamples) {
         super(numSamples);
     }
 
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Override methods
+\*--------------------------------------------------------------------------------------------------------------------*/
+
+    /**
+     * Note that in <code>NRooks</code> sampler, <code>numSamples</code> doesn't have to be
+     * a perfect square because on an nxn grid, it only has n samples, instead of n^2.
+     */
     @Override
     public void generateSamples() {
-        for (int p = 0; p < numSets; p++)
+        for (int p = 0; p < numSets; p++) {
             for (int j = 0; j < numSamples; j++) {
-                Point2D pv = new Point2D(j + Math.random(), j + Math.random());
-                squareSamples.add(pv);
+                squareSamples.add(
+                        new Point2D(j + Maths.randDouble(), j + Maths.randDouble()));
             }
+        }
         shuffleXCoordinates();
         shuffleYCoordinates();
     }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Private methods
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     // TODO there is going to be a better way to implement shuffle using JDK
     private void shuffleXCoordinates() {
@@ -45,5 +64,4 @@ public class NRooks extends Sampler {
                 squareSamples.get(target).y = temp;
             }
     }
-
 }

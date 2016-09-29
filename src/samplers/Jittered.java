@@ -1,5 +1,6 @@
 package samplers;
 
+import utilties.Maths;
 import utilties.Point2D;
 
 /**
@@ -8,9 +9,17 @@ import utilties.Point2D;
  */
 public class Jittered extends Sampler {
 
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Constructors
+\*--------------------------------------------------------------------------------------------------------------------*/
+
     public Jittered(int numSamples) {
         super(numSamples);
     }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Override methods
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     @Override
     public void generateSamples() {
@@ -19,6 +28,6 @@ public class Jittered extends Sampler {
             for (int j = 0; j < n; j++)
                 for (int k = 0; k < n; k++)
                     squareSamples.add(
-                            new Point2D((k + Math.random()) / n, (j + Math.random()) / n));
+                            new Point2D((k + Maths.randDouble()) / n, (j + Maths.randDouble()) / n));
     }
 }
