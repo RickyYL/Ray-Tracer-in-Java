@@ -28,7 +28,7 @@ abstract public class Sampler {
     /**
      * The current number of sample points used. It is initialized to zero when a
      * <code>Sampler</code> object is constructed. It is incremented by one each time the
-     * method <code>sampleUnitSquare</code> is called, its value at the end of each function
+     * method <code>nextSampleOnUnitSquare</code> is called, its value at the end of each function
      * call is the total number of squareSamples returned at the time.
      */
     long count = 0;
@@ -50,7 +50,17 @@ abstract public class Sampler {
      * results can be aliasing artifacts that are far worse than the jaggies.
      */
     List<Point2D> squareSamples;
+
+    /**
+     * Samples mapped from the <code>squareSamples</code> to samples on a disk. Call
+     * <code>mapSamplesToUnitDisk</code> first.
+     */
     List<Point2D> diskSamples;
+
+    /**
+     * Samples mapped from the <code>squareSamples</code> to samples on a disk. Call
+     * <code>mapSamplesToHemisphere</code> first.
+     */
     List<Point2D> hemisphereSamples;
 
 
@@ -145,15 +155,15 @@ abstract public class Sampler {
      * scene.
      * @return the next sample point stored in the sampler object.
      */
-    public Point2D sampleUnitSquare() {
+    public Point2D nextSampleOnUnitSquare() {
         return squareSamples.get((int) count++ % (numSamples * numSets));
     }
 
-    public Point2D sampleUnitDisk() {
+    public Point2D nextSampleOnUnitDisk() {
         return diskSamples.get((int) count++ % (numSamples * numSets));
     }
 
-    public Point2D sampleHemisphere() {
+    public Point2D nextSampleOnHemisphere() {
         return hemisphereSamples.get((int) count++ % (numSamples * numSets));
     }
 
