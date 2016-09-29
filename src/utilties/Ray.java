@@ -6,8 +6,16 @@ package utilties;
  */
 public class Ray {
 
-    Point3D  origin = new Point3D(0, 0, 0);
-    Vector3D direction = new Vector3D(0, 0, -1);
+/*--------------------------------------------------------------*\
+ *  Fields
+\*--------------------------------------------------------------*/
+
+    private Point3D  origin    = new Point3D(0, 0, 0);
+    private Vector3D direction = new Vector3D(0, 0, -1);
+
+/*--------------------------------------------------------------*\
+ *  Constructors
+\*--------------------------------------------------------------*/
 
     public Ray() {
     }
@@ -21,6 +29,10 @@ public class Ray {
         origin = r.origin;
         direction = r.direction;
     }
+
+/*--------------------------------------------------------------*\
+ *  Override methods
+\*--------------------------------------------------------------*/
 
     @Override
     public boolean equals(Object o) {
@@ -45,6 +57,10 @@ public class Ray {
         return "Ray{" + "origin=" + origin + ", direction=" + direction + '}';
     }
 
+/*--------------------------------------------------------------*\
+ *  Getters and setters
+\*--------------------------------------------------------------*/
+
     public Point3D getOrigin() {
         return origin;
     }
@@ -53,11 +69,23 @@ public class Ray {
         this.origin = origin;
     }
 
+    public void setOrigin(double x, double y, double z) {
+        origin.x = x;
+        origin.y = y;
+        origin.z = z;
+    }
+
     public Vector3D getDirection() {
         return direction;
     }
 
     public void setDirection(Vector3D direction) {
         this.direction = direction;
+    }
+
+    public void setDirection(double x, double y, double z) {
+        direction.x = x;
+        direction.y = y;
+        direction.z = z;
     }
 }
