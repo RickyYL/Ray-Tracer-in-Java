@@ -77,6 +77,14 @@ public class Sphere extends GeometricObject {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Sphere{" +
+                "center=" + center +
+                ", radius=" + radius +
+                '}';
+    }
+
     public Point3D getCenter() {
         return center;
     }

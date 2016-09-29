@@ -33,4 +33,31 @@ public class Plane extends GeometricObject {
         } else
             return false;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Plane plane = (Plane) o;
+
+        if (point != null ? !point.equals(plane.point) : plane.point != null) return false;
+        return normal != null ? normal.equals(plane.normal) : plane.normal == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = point != null ? point.hashCode() : 0;
+        result = 31 * result + (normal != null ? normal.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "point=" + point +
+                ", normal=" + normal +
+                '}';
+    }
 }

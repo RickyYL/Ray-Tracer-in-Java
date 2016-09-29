@@ -1,5 +1,6 @@
 import geometrics.Plane;
 import geometrics.Sphere;
+import samplers.Regular;
 import utilties.Normal;
 import utilties.Point3D;
 import utilties.RgbColor;
@@ -12,10 +13,9 @@ import world.World;
  */
 public class Main {
     public static void main(String... args) {
-        World w = new World(new ViewPlane(50, 50, 20.0, 1.0));
-        w.addObject(new Sphere(new Point3D(0, -25, 0), 80, RgbColor.RED));
-        w.addObject(new Sphere(new Point3D(0, 30,  0), 60, RgbColor.BLUE));
-        w.addObject(new Plane(new Point3D(0, 0, 0), new Normal(0, 1, 1), RgbColor.GREEN));
-        w.renderScene();
+        World w = new World(new ViewPlane(200, 200, 1.0, 1.0, 1, new Regular(1)));
+        w.addObject(new Plane(new Point3D(0, 0, 100), new Normal(0, 1, 1), RgbColor.BLUE));
+        w.addObject(new Sphere(new Point3D(0, 0, 50), 40));
+        w.renderSceneWithSampler();
     }
 }

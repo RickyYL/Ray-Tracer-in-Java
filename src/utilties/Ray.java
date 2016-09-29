@@ -2,7 +2,7 @@ package utilties;
 
 /**
  * @author Yuanqi Li
- * @version 0.2
+ * @version 0.5
  */
 public class Ray {
 
@@ -10,14 +10,16 @@ public class Ray {
  *  Fields
 \*--------------------------------------------------------------*/
 
-    private Point3D  origin    = new Point3D(0, 0, 0);
-    private Vector3D direction = new Vector3D(0, 0, -1);
+    private Point3D  origin;
+    private Vector3D direction;
 
 /*--------------------------------------------------------------*\
  *  Constructors
 \*--------------------------------------------------------------*/
 
     public Ray() {
+        this.origin = new Point3D(0, 0, 0);
+        this.direction = new Vector3D(0, 0, -1);
     }
 
     public Ray(Point3D origin, Vector3D direction) {
@@ -26,8 +28,13 @@ public class Ray {
     }
 
     public Ray(Ray r) {
-        origin = r.origin;
-        direction = r.direction;
+        this.origin = r.origin;
+        this.direction = r.direction;
+    }
+
+    public Ray(RayBuilder r) {
+        this.origin = r.origin;
+        this.direction = r.direction;
     }
 
 /*--------------------------------------------------------------*\
@@ -65,27 +72,75 @@ public class Ray {
         return origin;
     }
 
-    public void setOrigin(Point3D origin) {
+    public Ray setOrigin(Point3D origin) {
         this.origin = origin;
+        return this;
     }
 
-    public void setOrigin(double x, double y, double z) {
-        origin.x = x;
-        origin.y = y;
-        origin.z = z;
+    public Ray setOrigin(double x, double y, double z) {
+        if (origin == null) {
+            this.origin = new Point3D(x, y, z);
+        } else {
+            origin.x = x;
+            origin.y = y;
+            origin.z = z;
+        }
+        return this;
     }
 
     public Vector3D getDirection() {
         return direction;
     }
 
-    public void setDirection(Vector3D direction) {
+    public Ray setDirection(Vector3D direction) {
         this.direction = direction;
+        return this;
     }
 
-    public void setDirection(double x, double y, double z) {
-        direction.x = x;
-        direction.y = y;
-        direction.z = z;
+    public Ray setDirection(double x, double y, double z) {
+        if (direction == null) {
+            this.direction = new Vector3D(x, y, z);
+        } else {
+            direction.x = x;
+            direction.y = y;
+            direction.z = z;
+        }
+        return this;
+    }
+
+/*--------------------------------------------------------------*\
+ *  Builder
+ *  TODO
+ *  I'm not sure should I keep this ugly stuff. To be decided.
+\*--------------------------------------------------------------*/
+
+    public static class RayBuilder {
+
+        private Point3D  origin;
+        private Vector3D direction;
+
+        public RayBuilder setOrigin(Point3D origin) {
+            this.origin = origin;
+            return this;
+        }
+
+        public RayBuilder setOrigin(double x, double y, double z) {
+            this.origin = new Point3D(x, y, z);
+            return this;
+        }
+
+        public RayBuilder setDirection(Vector3D direction) {
+            this.direction = direction;
+            return this;
+        }
+
+        public RayBuilder setDirection(double x, double y, double z) {
+            this.direction = new Vector3D(x, y, z);
+            return this;
+        }
+
+        public Ray build() {
+            return new Ray(this);
+        }
     }
 }

@@ -3,8 +3,12 @@ package samplers;
 import utilties.Maths;
 import utilties.Point2D;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author Yuanqi Li
@@ -51,7 +55,7 @@ abstract public class Sampler {
      * it's important to use different sets with adjacent pixels. If we don't do this, the
      * results can be aliasing artifacts that are far worse than the jaggies.
      */
-    List<Point2D> squareSamples;
+    List<Point2D> squareSamples = new ArrayList<>();
 
     /**
      * Samples mapped from the <code>squareSamples</code> to samples on a disk. Call
@@ -66,35 +70,21 @@ abstract public class Sampler {
     List<Point2D> hemisphereSamples;
 
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Constructors
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Sampler(int numSamples) {
         this.numSamples = numSamples;
     }
 
-/*--------------------------------------------------------------*\
- *  Public methods
-\*--------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Sampler specific methods
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     /**
-     * Sets up the randomly shuffled indices.
-     */
-    public void setupShuffledIndices() {
-
-    }
-
-    /**
-     * Randomly shuffle the squareSamples in each patterns.
-     */
-    public void shuffleSamples() {
-
-    }
-
-    /**
-     * Generates sample patterns in a unit square, stored in data field <code>squareSamples</code>.
-     * Each subclass has to override this method.
+     * Generates sample patterns in a unit square, stored in data field <code>squareSamples
+     * </code>. Each subclass has to override this method.
      */
     abstract public void generateSamples();
 
@@ -160,7 +150,8 @@ abstract public class Sampler {
     public Point2D nextSampleOnUnitSquare() {
         if (count % numSamples == 0)
             jump = Maths.randInt() % numSets;
-        return squareSamples.get(jump + (int) (count++ % numSamples));
+        return squareSamples.get(
+                jump + shuffledIndices.get(jump + (int)count++ % numSamples));
     }
 
     /**
@@ -171,7 +162,8 @@ abstract public class Sampler {
     public Point2D nextSampleOnUnitDisk() {
         if (count % numSamples == 0)
             jump = Maths.randInt() % numSets;
-        return diskSamples.get(jump + (int) (count++ % numSamples));
+        return diskSamples.get(
+                jump + shuffledIndices.get(jump + (int)count++ % numSamples));
     }
 
     /**
@@ -182,12 +174,36 @@ abstract public class Sampler {
     public Point2D nextSampleOnHemisphere() {
         if (count % numSamples == 0)
             jump = Maths.randInt() % numSets;
-        return hemisphereSamples.get(jump + (int) (count++ % numSamples));
+        return hemisphereSamples.get(
+                jump + shuffledIndices.get(jump + (int)count++ % numSamples));
     }
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Helper methods
+\*--------------------------------------------------------------------------------------------------------------------*/
+
+    /**
+     * Sets up the randomly shuffled indices.
+     */
+    public void setupShuffledIndices() {
+        List<Integer> indices =
+                IntStream.range(0, numSamples).boxed().collect(Collectors.toList());
+        for (int i = 0; i < numSets; i++) {
+            Collections.shuffle(indices);       // a set of shuffled indices
+            shuffledIndices.addAll(indices.subList(0, numSamples));
+        }
+    }
+
+    /**
+     * Randomly shuffle the squareSamples in each patterns.
+     */
+    public void shuffleSamples() {
+
+    }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Getters and setters
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public int getNumSamples() {
         return numSamples;
