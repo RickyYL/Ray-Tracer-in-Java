@@ -8,7 +8,7 @@ import java.util.Random;
  */
 public class Maths {
 
-    public static final double EQN_EPS = 1e-90;
+    private static final double EQN_EPS = 1e-90;
 
     public static int randInt() {
         return new Random().nextInt();

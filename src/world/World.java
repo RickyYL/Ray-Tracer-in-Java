@@ -6,6 +6,7 @@ import utilties.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.NumericShaper;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,6 @@ public class World {
         RgbColor pixelColor;
         Ray      ray = new Ray().setDirection(0, 0, -1);
         double   zw = 100.0;
-        double   x, y;
 
         long startTime = System.currentTimeMillis();
 
@@ -119,27 +119,29 @@ public class World {
         RgbColor pixelColor;
         Ray      ray = new Ray().setDirection(0, 0, -1);
         double   zw = 100.0;
-        Point2D  sp;                    // sample point in [0,1]x[0.1]
-        Point2D  pp = new Point2D();    // sample point on a pixel
 
-        vp.getSampler().generateSamples();
+        long startTime = System.currentTimeMillis();
 
         for (int row = 0; row < vp.vres; row++) {                       // up
             for (int col = 0; col <= vp.hres; col++) {                  // across
                 pixelColor = RgbColor.BLACK;
-                for (int j = 0; j < vp.getNumSamples(); j++) {          // samples in a pixel
-                    sp = vp.getSampler().nextSampleOnUnitSquare();
+                for (int j = 0; j < vp.getNumSamples(); j++) {          // for samples in a pixel
+                    Point2D sp = vp.getSampler().nextSampleOnUnitSquare();
                     ray.setOrigin(
                             vp.pixelSize * (col - 0.5 * vp.hres + sp.x),
                             vp.pixelSize * (row - 0.5 * vp.vres + sp.y),
                             zw);
-                    pixelColor.add(tracer.trace(ray));
+                    pixelColor = pixelColor.add(tracer.trace(ray));
                 }
                 pixelColor = pixelColor.div(vp.getNumSamples());
                 image.setRGB(row, col, pixelColor.toInt());
             }
         }
 
+        long totalTime = System.currentTimeMillis() - startTime;
+        System.out.println(totalTime + " ms");
+
+        displayInfo();
         displayImage();
     }
 
