@@ -2,28 +2,94 @@ package utilties;
 
 /**
  * @author Yuanqi Li
- * @version 0.2
+ * @version 0.5
  */
 public class RgbColor {
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Colors
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public static final RgbColor BLACK = new RgbColor(0,   0,   0);
     public static final RgbColor RED   = new RgbColor(255, 0,   0);
     public static final RgbColor GREEN = new RgbColor(0,   255, 0);
     public static final RgbColor BLUE  = new RgbColor(0,   0,   255);
+    public static final RgbColor WHITE = new RgbColor(255, 255, 255);
 
-    double r, g, b;
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Fields
+\*--------------------------------------------------------------------------------------------------------------------*/
 
-    public RgbColor() { r = 0; g = 0; b = 0; }
-    public RgbColor(double a) { r = a; g = a; b = a; }
-    public RgbColor(double a, double bb, double c) { r = a; g = bb; b = c; }
+    public double r, g, b;
 
-    public RgbColor add(RgbColor c) { return new RgbColor(r + c.r, g + c.g, b + c.b); }
-    public RgbColor mul(double a)   { return new RgbColor(r * a, g * a, b * a); }
-    public RgbColor mul(RgbColor c) { return new RgbColor(r * c.r, g * c.g, b * c.b); }
-    public RgbColor div(double a)   { return new RgbColor(r / a, g / a, b / a); }
-    public RgbColor pow(double a)   { return new RgbColor(Math.pow(r, a), Math.pow(g, a), Math.pow(b, a)); }
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Constructors
+\*--------------------------------------------------------------------------------------------------------------------*/
 
-    public int toInt() { return ((int)r << 16) | ((int)g << 8) | (int)b; }
+    public RgbColor() {
+        this.r = 0;
+        this.g = 0;
+        this.b = 0;
+    }
+
+    public RgbColor(double a) {
+        this.r = a;
+        this.g = a;
+        this.b = a;
+    }
+
+    public RgbColor(double r, double g, double b) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Color arithmetics
+\*--------------------------------------------------------------------------------------------------------------------*/
+
+    public RgbColor add(RgbColor c) {
+        double r = this.r + c.r; if (r >= 255) r = 255; if (r <= 0) r = 0;
+        double g = this.g + c.g; if (g >= 255) g = 255; if (g <= 0) g = 0;
+        double b = this.b + c.b; if (b >= 255) b = 255; if (b <= 0) b = 0;
+        return new RgbColor(r, g, b);
+    }
+
+    public RgbColor mul(double a) {
+        double r = this.r * a; if (r >= 255) r = 255; if (r <= 0) r = 0;
+        double g = this.g * a; if (g >= 255) g = 255; if (g <= 0) g = 0;
+        double b = this.b * a; if (b >= 255) b = 255; if (b <= 0) b = 0;
+        return new RgbColor(r, g, b);
+    }
+
+    public RgbColor mul(RgbColor c) {
+        double r = this.r * c.r; if (r >= 255) r = 255; if (r <= 0) r = 0;
+        double g = this.g * c.g; if (g >= 255) g = 255; if (g <= 0) g = 0;
+        double b = this.b * c.b; if (b >= 255) b = 255; if (b <= 0) b = 0;
+        return new RgbColor(r, g, b);
+    }
+
+    public RgbColor div(double a) {
+        double r = this.r / a; if (r >= 255) r = 255; if (r <= 0) r = 0;
+        double g = this.g / a; if (g >= 255) g = 255; if (g <= 0) g = 0;
+        double b = this.b / a; if (b >= 255) b = 255; if (b <= 0) b = 0;
+        return new RgbColor(r, g, b);
+    }
+
+    public RgbColor pow(double a) {
+        double r = Math.pow(this.r, a); if (r >= 255) r = 255; if (r <= 0) r = 0;
+        double g = Math.pow(this.g, a); if (g >= 255) g = 255; if (g <= 0) g = 0;
+        double b = Math.pow(this.b, a); if (b >= 255) b = 255; if (b <= 0) b = 0;
+        return new RgbColor(r, g, b);
+    }
+
+    public int toInt() {
+        return (((int)r << 16) | ((int)g << 8) | (int)b);
+    }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Override methods
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     @Override
     public boolean equals(Object o) {
@@ -52,34 +118,6 @@ public class RgbColor {
 
     @Override
     public String toString() {
-        return "RgbColor{" +
-                "r=" + r +
-                ", g=" + g +
-                ", b=" + b +
-                '}';
-    }
-
-    public double getR() {
-        return r;
-    }
-
-    public void setR(double r) {
-        this.r = r;
-    }
-
-    public double getG() {
-        return g;
-    }
-
-    public void setG(double g) {
-        this.g = g;
-    }
-
-    public double getB() {
-        return b;
-    }
-
-    public void setB(double b) {
-        this.b = b;
+        return "RgbColor{" + "r=" + r + ", g=" + g + ", b=" + b + '}';
     }
 }
