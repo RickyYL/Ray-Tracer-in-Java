@@ -6,16 +6,16 @@ package utilties;
  */
 public class Ray {
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Fields
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     private Point3D  origin;
     private Vector3D direction;
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Constructors
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Ray() {
         this.origin = new Point3D(0, 0, 0);
@@ -32,14 +32,9 @@ public class Ray {
         this.direction = r.direction;
     }
 
-    public Ray(RayBuilder r) {
-        this.origin = r.origin;
-        this.direction = r.direction;
-    }
-
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Override methods
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     @Override
     public boolean equals(Object o) {
@@ -64,9 +59,9 @@ public class Ray {
         return "Ray{" + "origin=" + origin + ", direction=" + direction + '}';
     }
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Getters and setters
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Point3D getOrigin() {
         return origin;
@@ -78,13 +73,7 @@ public class Ray {
     }
 
     public Ray setOrigin(double x, double y, double z) {
-        if (origin == null) {
-            this.origin = new Point3D(x, y, z);
-        } else {
-            origin.x = x;
-            origin.y = y;
-            origin.z = z;
-        }
+        this.origin = new Point3D(x, y, z);
         return this;
     }
 
@@ -98,49 +87,7 @@ public class Ray {
     }
 
     public Ray setDirection(double x, double y, double z) {
-        if (direction == null) {
-            this.direction = new Vector3D(x, y, z);
-        } else {
-            direction.x = x;
-            direction.y = y;
-            direction.z = z;
-        }
+        this.direction = new Vector3D(x, y, z);
         return this;
-    }
-
-/*--------------------------------------------------------------*\
- *  Builder
- *  TODO
- *  I'm not sure should I keep this ugly stuff. To be decided.
-\*--------------------------------------------------------------*/
-
-    public static class RayBuilder {
-
-        private Point3D  origin;
-        private Vector3D direction;
-
-        public RayBuilder setOrigin(Point3D origin) {
-            this.origin = origin;
-            return this;
-        }
-
-        public RayBuilder setOrigin(double x, double y, double z) {
-            this.origin = new Point3D(x, y, z);
-            return this;
-        }
-
-        public RayBuilder setDirection(Vector3D direction) {
-            this.direction = direction;
-            return this;
-        }
-
-        public RayBuilder setDirection(double x, double y, double z) {
-            this.direction = new Vector3D(x, y, z);
-            return this;
-        }
-
-        public Ray build() {
-            return new Ray(this);
-        }
     }
 }
