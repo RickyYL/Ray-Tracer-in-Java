@@ -1,6 +1,7 @@
 package samplers;
 
 import utilties.Point2D;
+import utilties.RgbColor;
 
 /**
  * @author Yuanqi Li
@@ -16,7 +17,11 @@ public class Regular extends Sampler {
         super(numSamples);
     }
 
-/*--------------------------------------------------------------------------------------------------------------------*\
+    public Regular(int numSamples, int numSets) {
+        super(numSamples, numSets);
+    }
+
+    /*--------------------------------------------------------------------------------------------------------------------*\
  *  Override methods
 \*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -26,6 +31,6 @@ public class Regular extends Sampler {
         int n = (int)Math.sqrt(numSamples);
         for (int j = 0; j < n; j++)
             for (int k = 0; k < n; k++)
-                squareSamples.add(new Point2D(k / n, j / n));
+                squareSamples.add(new Point2D((k + 0.5) / n, (j + 0.5) / n));
     }
 }
