@@ -1,4 +1,4 @@
-package utilties;
+package utilities;
 
 /**
  * @author Yuanqi Li
@@ -24,12 +24,12 @@ public class Ray {
 
     public Ray(Point3D origin, Vector3D direction) {
         this.origin = origin;
-        this.direction = direction;
+        this.direction = direction.normalize();
     }
 
     public Ray(Ray r) {
         this.origin = r.origin;
-        this.direction = r.direction;
+        this.direction = r.direction.normalize();
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -82,12 +82,12 @@ public class Ray {
     }
 
     public Ray setDirection(Vector3D direction) {
-        this.direction = direction;
+        this.direction = direction.normalize();
         return this;
     }
 
     public Ray setDirection(double x, double y, double z) {
-        this.direction = new Vector3D(x, y, z);
+        this.direction = new Vector3D(x, y, z).normalize();
         return this;
     }
 }
