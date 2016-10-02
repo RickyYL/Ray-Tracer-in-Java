@@ -2,40 +2,64 @@ package utilities;
 
 /**
  * @author Yuanqi Li
- * @version 0.2
  */
 public class Point3D {
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Fields
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
-    public double x = 0;
-    public double y = 0;
-    public double z = 0;
+    public double x;
+    public double y;
+    public double z;
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Constructors
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Point3D() {
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
     }
 
     public Point3D(double a) {
-        x = a; y = a; z = a;
+        this.x = a;
+        this.y = a;
+        this.z = a;
     }
 
-    public Point3D(double a, double b, double c) {
-        x = a; y = b; z = c;
+    public Point3D(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
-    public Point3D(final Point3D p) {
-        x = p.x; y = p.y; z = p.z;
+    public Point3D(Point3D p) {
+        this.x = p.x;
+        this.y = p.y;
+        this.z = p.z;
     }
 
-/*--------------------------------------------------------------*\
+    public Point3D(Vector3D v) {
+        this.x = v.x;
+        this.y = v.y;
+        this.z = v.z;
+    }
+
+    public Point3D(Normal n) {
+        this.x = n.x;
+        this.y = n.y;
+        this.z = n.z;
+    }
+
+    public Point3D copy() {
+        return new Point3D(x, y, z);
+    }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Public methods
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Point3D neg() {
         return new Point3D(-x, -y, -z);
@@ -57,18 +81,17 @@ public class Point3D {
         return new Point3D(x * a, y * a, z * a);
     }
 
-    // TODO
-    public double distance(Point3D p) {
-        return this.sub(p).norm();
+    public double normal(Point3D p) {
+        return this.sub(p).normal();
     }
 
-    public double distanceSquare(Point3D p) {
-        return this.sub(p).normSquare();
+    public double normalSquare(Point3D p) {
+        return this.sub(p).normalSquare();
     }
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Override methods
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     @Override
     public boolean equals(Object o) {
@@ -97,11 +120,10 @@ public class Point3D {
 
     @Override
     public String toString() {
-        return "Point3D{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
+        return "Point3D{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
     }
-
-/*--------------------------------------------------------------*\
- *  Getters and setters
-\*--------------------------------------------------------------*/
-
 }

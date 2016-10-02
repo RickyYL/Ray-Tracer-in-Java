@@ -2,7 +2,6 @@ package utilities;
 
 /**
  * @author Yuanqi Li
- * @version 0.5
  */
 public class RgbColor {
 
@@ -20,7 +19,9 @@ public class RgbColor {
  *  Fields
 \*--------------------------------------------------------------------------------------------------------------------*/
 
-    public double r, g, b;
+    public double r;
+    public double g;
+    public double b;
 
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Constructors
@@ -45,7 +46,7 @@ public class RgbColor {
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
- *  Color arithmetics
+ *  Color arithmetic
 \*--------------------------------------------------------------------------------------------------------------------*/
 
     public RgbColor add(RgbColor c) {
@@ -118,6 +119,10 @@ public class RgbColor {
 
     @Override
     public String toString() {
-        return "RgbColor{" + "r=" + r + ", g=" + g + ", b=" + b + '}';
+        return "RgbColor{" +
+                "r=" + r +
+                ", g=" + g +
+                ", b=" + b +
+                '}';
     }
 }

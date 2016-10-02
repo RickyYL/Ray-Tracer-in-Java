@@ -4,11 +4,10 @@ import java.util.Random;
 
 /**
  * @author Yuanqi Li
- * @version 0.2
  */
 public class Maths {
 
-    private static final double EQN_EPS = 1e-90;
+    public static final double EQN_EPS = 1e-90;
 
     public static int randInt() {
         return new Random().nextInt();

@@ -2,7 +2,6 @@ package utilities;
 
 /**
  * @author Yuanqi Li
- * @version 0.5
  */
 public class Ray {
 
@@ -24,12 +23,12 @@ public class Ray {
 
     public Ray(Point3D origin, Vector3D direction) {
         this.origin = origin;
-        this.direction = direction.normalize();
+        this.direction = direction.normalVector();
     }
 
     public Ray(Ray r) {
         this.origin = r.origin;
-        this.direction = r.direction.normalize();
+        this.direction = r.direction.normalVector();
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -56,7 +55,10 @@ public class Ray {
 
     @Override
     public String toString() {
-        return "Ray{" + "origin=" + origin + ", direction=" + direction + '}';
+        return "Ray{" +
+                "origin=" + origin +
+                ", direction=" + direction +
+                '}';
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -82,12 +84,12 @@ public class Ray {
     }
 
     public Ray setDirection(Vector3D direction) {
-        this.direction = direction.normalize();
+        this.direction = direction.normalVector();
         return this;
     }
 
     public Ray setDirection(double x, double y, double z) {
-        this.direction = new Vector3D(x, y, z).normalize();
+        this.direction = new Vector3D(x, y, z).normalVector();
         return this;
     }
 }

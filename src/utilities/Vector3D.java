@@ -2,7 +2,6 @@ package utilities;
 
 /**
  * @author Yuanqi Li
- * @version 0.2
  */
 public class Vector3D {
 
@@ -10,7 +9,9 @@ public class Vector3D {
  *  Fields
 \*--------------------------------------------------------------------------------------------------------------------*/
 
-    double x, y, z;
+    public double x;
+    public double y;
+    public double z;
 
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Constructors
@@ -33,6 +34,12 @@ public class Vector3D {
         this.z = z;
     }
 
+    public Vector3D(Point3D p) {
+        this.x = p.x;
+        this.y = p.y;
+        this.z = p.z;
+    }
+
     public Vector3D(Vector3D v) {
         this.x = v.x;
         this.y = v.y;
@@ -45,14 +52,12 @@ public class Vector3D {
         this.z = n.z;
     }
 
-    public Vector3D(Point3D p) {
-        this.x = p.x;
-        this.y = p.y;
-        this.z = p.z;
+    public Vector3D copy() {
+        return new Vector3D(x, y, z);
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
- *  Public methods
+ *  General methods
 \*--------------------------------------------------------------------------------------------------------------------*/
 
     public Vector3D neg() {
@@ -91,20 +96,24 @@ public class Vector3D {
         return new Vector3D(y*n.z - z*n.y, z*n.x - x*n.z, x*n.y - y*n.x);
     }
 
-    public double norm() {
+    public double normal() {
         return Math.pow(x * x + y * y + z * z, 0.5);
     }
 
-    public double normSquare() {
+    public double normalSquare() {
         return x * x + y * y + z * z;
     }
 
-    public Vector3D normalize() {
-        double norm = norm();
+    public Vector3D normalVector() {
+        double norm = Math.pow(x * x + y * y + z * z, 0.5);
+        return new Vector3D(x / norm, y / norm, z / norm);
+    }
+
+    public void normalize() {
+        double norm = Math.pow(x * x + y * y + z * z, 0.5);
         x = x / norm;
         y = y / norm;
         z = z / norm;
-        return this;
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -138,6 +147,10 @@ public class Vector3D {
 
     @Override
     public String toString() {
-        return "Vector3D{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
+        return "Vector3D{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
     }
 }
