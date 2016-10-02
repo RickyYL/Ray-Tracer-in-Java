@@ -1,9 +1,7 @@
 package samplers;
 
-import utilties.Maths;
-import utilties.Point2D;
-
-import java.util.stream.Collectors;
+import utilities.Maths;
+import utilities.Point2D;
 
 /**
  * @author Yuanqi Li

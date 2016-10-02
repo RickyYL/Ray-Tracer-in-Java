@@ -1,9 +1,9 @@
 package lights;
 
-import utilties.Point3D;
-import utilties.RgbColor;
-import utilties.ShadeRec;
-import utilties.Vector3D;
+import utilities.Point3D;
+import utilities.RgbColor;
+import utilities.ShadeRec;
+import utilities.Vector3D;
 
 /**
  * @author Yuanqi Li

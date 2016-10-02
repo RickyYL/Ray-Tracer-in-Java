@@ -1,19 +1,20 @@
 package world;
 
+import cameras.Camera;
 import geometrics.*;
+import lights.Ambient;
+import lights.Light;
 import tracers.*;
-import utilties.*;
+import utilities.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.font.NumericShaper;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Yuanqi Li
- * @version 0.5
  */
 public class World {
 
@@ -21,14 +22,18 @@ public class World {
  *  Fields
 \*--------------------------------------------------------------*/
 
-    private ViewPlane             vp;
-    private RgbColor              backgroundColor = RgbColor.BLACK;
-    private Tracer                tracer  = new MultipleObjects(this);
-    private List<GeometricObject> objects = new ArrayList<>();
+    private ViewPlane vp;
+    private Camera    camera = null;
+    private Tracer    tracer = new MultipleObjects(this);
+    private RgbColor  backgroundColor = RgbColor.BLACK;
+    private Light     ambient = new Ambient();
+
     private BufferedImage         image;
+    private List<GeometricObject> objects = new ArrayList<>();
+    private List<Light>           lights = new ArrayList<>();
 
     @Deprecated
-    private Sphere                sphere;
+    private Sphere sphere;
 
 /*--------------------------------------------------------------*\
  *  Constructors
@@ -49,8 +54,11 @@ public class World {
      * @return    ray-intersection information
      */
     public ShadeRec hitBareBonesObjects(final Ray ray) {
+
         ShadeRec sr = new ShadeRec(this);
-        double t = 0, tmin = Constants.kHugeValue;
+        double t = Constants.kEpsilon;
+        double tmin = Constants.kHugeValue;
+
         for (GeometricObject o : objects) {
             if (o.hit(ray, t, sr) && t < tmin) {
                 sr.setHit(true);
@@ -58,6 +66,36 @@ public class World {
                 sr.setColor(o.getColor());
             }
         }
+        return sr;
+    }
+
+    public ShadeRec hitObjects(final Ray ray) {
+
+        // stores in it all info required for shading the nearest hit point
+        ShadeRec sr = new ShadeRec(this);
+        double   t = Constants.kEpsilon;
+        double   tmin = Constants.kHugeValue;
+        Normal   normal = null;
+        Point3D  localHitPoint = null;
+
+        for (GeometricObject o : objects) {
+            if (o.hit(ray, t, sr) && t < tmin) {
+                tmin = t;
+                sr.isHit = true;
+                sr.material = o.getMaterial();
+                sr.hitPoint = ray.getOrigin().add(ray.getDirection().mul(t));
+                normal = sr.normal;
+                localHitPoint = sr.localHitPoint;
+            }
+        }
+
+        // restore the nearest object's info
+        if (sr.isHit) {
+            sr.t = tmin;
+            sr.normal = normal;
+            sr.localHitPoint = localHitPoint;
+        }
+
         return sr;
     }
 
@@ -69,12 +107,7 @@ public class World {
         objects.add(object);
     }
 
-    /**
-     * Displays world information in the console.
-     */
-    public void displayInfo() {
-        objects.stream().forEach(System.out::println);
-    }
+    public void addLight(Light light) { lights.add(light); }
 
 /*--------------------------------------------------------------*\
  *  Render methods (to be relocated to Camera classes)
@@ -122,10 +155,10 @@ public class World {
 
         long startTime = System.currentTimeMillis();
 
-        for (int row = 0; row < vp.vres; row++) {                       // up
-            for (int col = 0; col <= vp.hres; col++) {                  // across
+        for (int row = 0; row < vp.vres; row++) {
+            for (int col = 0; col <= vp.hres; col++) {
                 pixelColor = RgbColor.BLACK;
-                for (int j = 0; j < vp.getNumSamples(); j++) {          // for samples in a pixel
+                for (int j = 0; j < vp.getNumSamples(); j++) {
                     Point2D sp = vp.getSampler().nextSampleOnUnitSquare();
                     ray.setOrigin(
                             vp.pixelSize * (col - 0.5 * vp.hres + sp.x),
@@ -145,29 +178,35 @@ public class World {
         displayImage();
     }
 
-
-
-    // TODO I'm not sure if I get things work for Java's object model.
-    // See Listing 8.1
+    /**
+     * Renders the scene in a perspective view.
+     */
     public void renderPerspective() {
 
         double eyePoint = 0;
         double viewPlaneDistance = 0;
+        Ray    ray = new Ray().setOrigin(0, 0, eyePoint);
 
-        RgbColor pixelColor;
-        Ray      ray = new Ray(new Point3D(0.0, 0.0, eyePoint), new Vector3D());
-
-        for (int r = 0; r < vp.getVres(); r++) {
-            for (int c = 0; c <= vp.getHres(); c++) {
-                ray.setDirection(new Vector3D(
-                        vp.getPixelSize() * (c - 0.5 * (vp.getHres() - 1.0)),
-                        vp.getPixelSize() * (r - 0.5 * (vp.getVres() - 1.0)),
-                        -viewPlaneDistance));
-                ray.getDirection().normalize();
-                image.setRGB(r, c, tracer.trace(ray).toInt());
+        for (int row = 0; row < vp.vres; row++) {
+            for (int col = 0; col <= vp.hres; col++) {
+                ray.setDirection(
+                        vp.pixelSize * (col - 0.5 * (vp.hres - 1.0)),
+                        vp.pixelSize * (row - 0.5 * (vp.vres - 1.0)),
+                        -viewPlaneDistance);
+                image.setRGB(row, col, tracer.trace(ray).toInt());
             }
         }
 
+        displayInfo();
+        displayImage();
+    }
+
+    /**
+     * Renders the scene using a camera, by which the task is done.
+     */
+    public void renderWithCamera() {
+        camera.renderScene(this);
+        displayInfo();
         displayImage();
     }
 
@@ -176,7 +215,7 @@ public class World {
 \*--------------------------------------------------------------*/
 
     /**
-     * // TODO To be removed.
+     * // TODO To be removed. Maybe it can be kept, but still need a modification for switch.
      * Displays pixels on somewhere.
      * @param row        the row of the pixel
      * @param column     the column of the pixel
@@ -210,6 +249,13 @@ public class World {
         frame.setVisible(true);
     }
 
+    /**
+     * Displays world information in the console.
+     */
+    private void displayInfo() {
+        objects.forEach(System.out::println);
+    }
+
 /*--------------------------------------------------------------*\
  *  Getters and setters
 \*--------------------------------------------------------------*/
@@ -222,12 +268,12 @@ public class World {
         this.vp = vp;
     }
 
-    public RgbColor getBackgroundColor() {
-        return backgroundColor;
+    public Camera getCamera() {
+        return camera;
     }
 
-    public void setBackgroundColor(RgbColor backgroundColor) {
-        this.backgroundColor = backgroundColor;
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 
     public Tracer getTracer() {
@@ -238,6 +284,30 @@ public class World {
         this.tracer = tracer;
     }
 
+    public RgbColor getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(RgbColor backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public Light getAmbient() {
+        return ambient;
+    }
+
+    public void setAmbient(Light ambient) {
+        this.ambient = ambient;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
     public List<GeometricObject> getObjects() {
         return objects;
     }
@@ -246,11 +316,11 @@ public class World {
         this.objects = objects;
     }
 
-    public Sphere getSphere() {
-        return sphere;
+    public List<Light> getLights() {
+        return lights;
     }
 
-    public void setSphere(Sphere sphere) {
-        this.sphere = sphere;
+    public void setLights(List<Light> lights) {
+        this.lights = lights;
     }
 }

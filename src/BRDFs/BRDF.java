@@ -1,9 +1,10 @@
 package BRDFs;
 
+import samplers.Regular;
 import samplers.Sampler;
-import utilties.RgbColor;
-import utilties.ShadeRec;
-import utilties.Vector3D;
+import utilities.RgbColor;
+import utilities.ShadeRec;
+import utilities.Vector3D;
 
 /**
  * @author Yuanqi Li
@@ -12,6 +13,14 @@ import utilties.Vector3D;
 public abstract class BRDF {
 
     Sampler sampler;
+
+    public BRDF() {
+        this.sampler = new Regular(1);
+    }
+
+    public BRDF(Sampler sampler) {
+        this.sampler = sampler;
+    }
 
     /**
      * Returns the BRDF itself, unless it contains a delta function.

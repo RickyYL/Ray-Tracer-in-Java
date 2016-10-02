@@ -1,12 +1,9 @@
 import geometrics.Plane;
 import geometrics.Sphere;
 import samplers.Jittered;
-import samplers.NRooks;
-import samplers.Random;
-import samplers.Regular;
-import utilties.Normal;
-import utilties.Point3D;
-import utilties.RgbColor;
+import utilities.Normal;
+import utilities.Point3D;
+import utilities.RgbColor;
 import world.ViewPlane;
 import world.World;
 

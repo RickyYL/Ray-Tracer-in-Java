@@ -1,8 +1,8 @@
 package samplers;
 
-import utilties.Maths;
-import utilties.Point2D;
-import utilties.RgbColor;
+import utilities.Maths;
+import utilities.Point2D;
+import utilities.RgbColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,7 +89,7 @@ abstract public class Sampler {
         generateSamples();
     }
 
-    /*--------------------------------------------------------------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Sampler specific methods
 \*--------------------------------------------------------------------------------------------------------------------*/
 

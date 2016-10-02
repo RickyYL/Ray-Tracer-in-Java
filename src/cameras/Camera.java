@@ -1,7 +1,7 @@
 package cameras;
 
-import utilties.Point3D;
-import utilties.Vector3D;
+import utilities.Point3D;
+import utilities.Vector3D;
 import world.World;
 
 /**
@@ -61,16 +61,16 @@ abstract public class Camera {
     abstract public void renderScene(World w);
 
 /*--------------------------------------------------------------*\
- *  Public methods
+ *  Helper methods
 \*--------------------------------------------------------------*/
 
     /**
      * Computes the uvw-coordinate, aka, the camera coordinate.
      */
-    public void uvw() {
+    void uvw() {
         w = eye.sub(lookat).normalize();
-        u = up.crossProduct(w).normalize();
-        v = w.crossProduct(u).normalize();
+        u = up.cross(w).normalize();
+        v = w.cross(u).normalize();
     }
 
 /*--------------------------------------------------------------*\
@@ -91,7 +91,6 @@ abstract public class Camera {
         if (u != null ? !u.equals(camera.u) : camera.u != null) return false;
         if (v != null ? !v.equals(camera.v) : camera.v != null) return false;
         return w != null ? w.equals(camera.w) : camera.w == null;
-
     }
 
     @Override
@@ -130,24 +129,42 @@ abstract public class Camera {
         return eye;
     }
 
-    public void setEye(Point3D eye) {
+    public Camera setEye(Point3D eye) {
         this.eye = eye;
+        return this;
+    }
+
+    public Camera setEye(double x, double y, double z) {
+        this.eye = new Point3D(x, y, z);
+        return this;
     }
 
     public Point3D getLookat() {
         return lookat;
     }
 
-    public void setLookat(Point3D lookat) {
+    public Camera setLookat(Point3D lookat) {
         this.lookat = lookat;
+        return this;
+    }
+
+    public Camera setLookat(double x, double y, double z) {
+        this.lookat = new Point3D(x, y, z);
+        return this;
     }
 
     public Vector3D getUp() {
         return up;
     }
 
-    public void setUp(Vector3D up) {
+    public Camera setUp(Vector3D up) {
         this.up = up;
+        return this;
+    }
+
+    public Camera setUp(double x, double y, double z) {
+        this.up = new Vector3D(x, y, z);
+        return this;
     }
 
     public Vector3D getU() {
@@ -166,7 +183,8 @@ abstract public class Camera {
         return exposureTime;
     }
 
-    public void setExposureTime(double exposureTime) {
+    public Camera setExposureTime(double exposureTime) {
         this.exposureTime = exposureTime;
+        return this;
     }
 }

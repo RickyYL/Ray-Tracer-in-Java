@@ -1,7 +1,7 @@
 package samplers;
 
-import utilties.Maths;
-import utilties.Point2D;
+import utilities.Maths;
+import utilities.Point2D;
 
 /**
  * @author Yuanqi Li

@@ -12,15 +12,14 @@ public class ViewPlane {
  *  Fields
 \*--------------------------------------------------------------*/
 
-    public int      hres;
-    public int      vres;
-    public double   pixelSize  = 1.0;
+    public int       hres;
+    public int       vres;
+    public double    pixelSize;
 
-    public double   gamma      = 1.0;
-    public double   invGamma   = 1.0;
-
-    private int     numSamples = 1;
-    private Sampler sampler    = new Regular(1);
+    private double   gamma;
+    private double   invGamma;
+    private int      numSamples;
+    private Sampler  sampler;
 
 /*--------------------------------------------------------------*\
  *  Constructors
@@ -29,6 +28,11 @@ public class ViewPlane {
     public ViewPlane(int hres, int vres) {
         this.hres = hres;
         this.vres = vres;
+        this.pixelSize = 1.0;
+        this.gamma = 1.0;
+        this.invGamma = 1.0;
+        this.numSamples = 1;
+        this.sampler = new Regular(1);
     }
 
     public ViewPlane(int hres, int vres, double pixelSize, double gamma, int numSamples, Sampler sampler) {
@@ -44,30 +48,6 @@ public class ViewPlane {
 /*--------------------------------------------------------------*\
  *  Getters and setters
 \*--------------------------------------------------------------*/
-
-    public int getHres() {
-        return hres;
-    }
-
-    public void setHres(int hres) {
-        this.hres = hres;
-    }
-
-    public int getVres() {
-        return vres;
-    }
-
-    public void setVres(int vres) {
-        this.vres = vres;
-    }
-
-    public double getPixelSize() {
-        return pixelSize;
-    }
-
-    public void setPixelSize(float pixelSize) {
-        this.pixelSize = pixelSize;
-    }
 
     public double getGamma() {
         return gamma;

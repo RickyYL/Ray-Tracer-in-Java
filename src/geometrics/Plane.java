@@ -1,6 +1,6 @@
 package geometrics;
 
-import utilties.*;
+import utilities.*;
 
 /**
  * @author Yuanqi Li
@@ -24,11 +24,11 @@ public class Plane extends GeometricObject {
 
     @Override
     public boolean hit(Ray ray, double tmin, ShadeRec sr) {
-        double t = point.sub(ray.getOrigin()).dotProduct(normal) / (ray.getDirection().dotProduct(normal));
+        double t = point.sub(ray.getOrigin()).mul(normal) / (ray.getDirection().mul(normal));
         if (t > Constants.kEpsilon) {
             tmin = t;
             sr.setNormal(normal);
-            sr.setLocalHitPoint(ray.getOrigin().add(ray.getDirection().scalarProduct(t)));
+            sr.setHitPoint(ray.getOrigin().add(ray.getDirection().mul(t)));
             return true;
         } else
             return false;

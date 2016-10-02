@@ -1,8 +1,9 @@
 package geometrics;
 
-import utilties.Ray;
-import utilties.RgbColor;
-import utilties.ShadeRec;
+import materials.Material;
+import utilities.Ray;
+import utilities.RgbColor;
+import utilities.ShadeRec;
 
 /**
  * @author Yuanqi Li
@@ -11,13 +12,23 @@ import utilties.ShadeRec;
 public abstract class GeometricObject {
 
     RgbColor color = RgbColor.RED;
+    Material material = null;
 
-    abstract public boolean hit(final Ray ray, double tmin, ShadeRec sr);
+    public abstract boolean hit(final Ray ray, double tmin, ShadeRec sr);
 
     public RgbColor getColor() {
         return color;
     }
+
     public void setColor(RgbColor color) {
         this.color = color;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 }

@@ -1,7 +1,6 @@
 package samplers;
 
-import utilties.Point2D;
-import utilties.RgbColor;
+import utilities.Point2D;
 
 /**
  * @author Yuanqi Li

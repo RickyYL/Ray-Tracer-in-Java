@@ -1,6 +1,6 @@
 package geometrics;
 
-import utilties.*;
+import utilities.*;
 
 /**
  * @author Yuanqi Li
@@ -24,11 +24,12 @@ public class Sphere extends GeometricObject {
 
     @Override
     public boolean hit(Ray ray, double tmin, ShadeRec sr) {
+
         double   t;
         Vector3D temp = ray.getOrigin().sub(center);
-        double   a    = ray.getDirection().dotProduct(ray.getDirection());
-        double   b    = temp.scalarProduct(2.0).dotProduct(ray.getDirection());
-        double   c    = temp.dotProduct(temp) - radius * radius;
+        double   a    = ray.getDirection().mul(ray.getDirection());
+        double   b    = temp.mul(2.0).mul(ray.getDirection());
+        double   c    = temp.mul(temp) - radius * radius;
         double   disc = b * b - 4.0 * a * c;
 
         if (disc < 0.0)
@@ -39,16 +40,16 @@ public class Sphere extends GeometricObject {
         t = (-b - e) / denom;
         if (t > Constants.kEpsilon) {
             tmin = t;
-            sr.setNormal(new Normal(temp.add(ray.getDirection().scalarProduct(t)).divide(radius)).normalize());
-            sr.setLocalHitPoint(ray.getOrigin().add(ray.getDirection().scalarProduct(t)));
+            sr.setNormal(new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalize());
+            sr.setHitPoint(ray.getOrigin().add(ray.getDirection().mul(t)));
             return true;
         }
 
         t = (-b + e) / denom;
         if (t > Constants.kEpsilon) {
             tmin = t;
-            sr.setNormal(new Normal(temp.add(ray.getDirection().scalarProduct(t)).divide(radius)).normalize());
-            sr.setLocalHitPoint(ray.getOrigin().add(ray.getDirection().scalarProduct(t)));
+            sr.setNormal(new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalize());
+            sr.setHitPoint(ray.getOrigin().add(ray.getDirection().mul(t)));
             return true;
         }
 

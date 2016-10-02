@@ -1,8 +1,8 @@
 package tracers;
 
-import utilties.Ray;
-import utilties.RgbColor;
-import utilties.ShadeRec;
+import utilities.Ray;
+import utilities.RgbColor;
+import utilities.ShadeRec;
 import world.World;
 
 /**

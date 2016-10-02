@@ -1,19 +1,21 @@
 package BRDFs;
 
-import utilties.RgbColor;
-import utilties.ShadeRec;
-import utilties.Vector3D;
-import utilties.Constants;
+import samplers.Sampler;
+import utilities.RgbColor;
+import utilities.ShadeRec;
+import utilities.Vector3D;
+import utilities.Constants;
 
 /**
  * @author Yuanqi Li
  */
 public class Lambertian extends BRDF {
 
-    double   diffuseCoeff;
-    RgbColor diffuseColor;
+    private double   diffuseCoeff;
+    private RgbColor diffuseColor;
 
-    public Lambertian(double diffuseCoeff, RgbColor diffuseColor) {
+    public Lambertian(Sampler sampler, double diffuseCoeff, RgbColor diffuseColor) {
+        super(sampler);
         this.diffuseCoeff = diffuseCoeff;
         this.diffuseColor = diffuseColor;
     }
@@ -31,5 +33,21 @@ public class Lambertian extends BRDF {
     @Override
     public RgbColor rho(ShadeRec sr, Vector3D wo) {
         return diffuseColor.mul(diffuseCoeff);
+    }
+
+    public double getDiffuseCoeff() {
+        return diffuseCoeff;
+    }
+
+    public void setDiffuseCoeff(double diffuseCoeff) {
+        this.diffuseCoeff = diffuseCoeff;
+    }
+
+    public RgbColor getDiffuseColor() {
+        return diffuseColor;
+    }
+
+    public void setDiffuseColor(RgbColor diffuseColor) {
+        this.diffuseColor = diffuseColor;
     }
 }

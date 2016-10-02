@@ -1,8 +1,8 @@
 package tracers;
 
-import utilties.Ray;
-import utilties.RgbColor;
-import utilties.ShadeRec;
+import utilities.Ray;
+import utilities.RgbColor;
+import utilities.ShadeRec;
 import world.World;
 
 /**
@@ -18,8 +18,8 @@ public class MultipleObjects extends Tracer {
     @Override
     public RgbColor trace(Ray ray) {
         ShadeRec sr = world.hitBareBonesObjects(ray);
-        if (sr.isHit())
-            return sr.getColor();
+        if (sr.isHit)
+            return sr.color;
         else
             return world.getBackgroundColor();
     }
