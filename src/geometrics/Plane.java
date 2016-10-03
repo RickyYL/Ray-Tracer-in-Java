@@ -25,7 +25,7 @@ public class Plane extends GeometricObject {
     @Override
     public boolean hit(Ray ray, double tmin, ShadeRec sr) {
         double t = point.sub(ray.getOrigin()).mul(normal) / (ray.getDirection().mul(normal));
-        if (t > Constants.kEpsilon) {
+        if (t > Constants.EPSILON) {
             tmin = t;
             sr.setNormal(normal);
             sr.setHitPoint(ray.getOrigin().add(ray.getDirection().mul(t)));

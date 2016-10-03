@@ -23,4 +23,14 @@ public class MultipleObjects extends Tracer {
         else
             return world.getBackgroundColor();
     }
+
+    @Override
+    public RgbColor trace(Ray ray, int depth) {
+        return null;
+    }
+
+    @Override
+    public RgbColor trace(Ray ray, Double tmin, int depth) {
+        return null;
+    }
 }

@@ -38,17 +38,17 @@ public class Sphere extends GeometricObject {
         double e = Math.sqrt(disc);
         double denom = 2.0 * a;
         t = (-b - e) / denom;
-        if (t > Constants.kEpsilon) {
+        if (t > Constants.EPSILON) {
             tmin = t;
-            sr.setNormal(new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalize());
+            sr.setNormal(new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalVector());
             sr.setHitPoint(ray.getOrigin().add(ray.getDirection().mul(t)));
             return true;
         }
 
         t = (-b + e) / denom;
-        if (t > Constants.kEpsilon) {
+        if (t > Constants.EPSILON) {
             tmin = t;
-            sr.setNormal(new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalize());
+            sr.setNormal(new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalVector());
             sr.setHitPoint(ray.getOrigin().add(ray.getDirection().mul(t)));
             return true;
         }

@@ -1,9 +1,7 @@
 package brdfs;
 
-import utilities.RgbColor;
-import utilities.ShadeRec;
-import utilities.Vector3D;
-import utilities.Constants;
+import samplers.Sampler;
+import utilities.*;
 
 /**
  * @author Yuanqi Li
@@ -22,6 +20,12 @@ public class Lambertian extends BRDF {
 \*--------------------------------------------------------------------------------------------------------------------*/
 
     public Lambertian(double diffuseReflectionCoefficient, RgbColor diffuseColor) {
+        this.diffuseReflectionCoefficient = diffuseReflectionCoefficient;
+        this.diffuseColor = diffuseColor;
+    }
+
+    public Lambertian(Sampler sampler, Normal normal, double diffuseReflectionCoefficient, RgbColor diffuseColor) {
+        super(sampler, normal);
         this.diffuseReflectionCoefficient = diffuseReflectionCoefficient;
         this.diffuseColor = diffuseColor;
     }

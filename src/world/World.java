@@ -56,8 +56,8 @@ public class World {
     public ShadeRec hitBareBonesObjects(final Ray ray) {
 
         ShadeRec sr = new ShadeRec(this);
-        double t = Constants.kEpsilon;
-        double tmin = Constants.kHugeValue;
+        double t = Constants.EPSILON;
+        double tmin = Constants.HUGE_VALUE;
 
         for (GeometricObject o : objects) {
             if (o.hit(ray, t, sr) && t < tmin) {
@@ -73,8 +73,8 @@ public class World {
 
         // stores in it all info required for shading the nearest hit point
         ShadeRec sr = new ShadeRec(this);
-        double   t = Constants.kEpsilon;
-        double   tmin = Constants.kHugeValue;
+        double   t = Constants.EPSILON;
+        double   tmin = Constants.HUGE_VALUE;
         Normal   normal = null;
         Point3D  localHitPoint = null;
 
@@ -322,5 +322,13 @@ public class World {
 
     public void setLights(List<Light> lights) {
         this.lights = lights;
+    }
+
+    public Sphere getSphere() {
+        return sphere;
+    }
+
+    public void setSphere(Sphere sphere) {
+        this.sphere = sphere;
     }
 }

@@ -22,7 +22,7 @@ public class Pinhole extends Camera {
     @Override
     public void renderScene(World world) {
         RgbColor  radiance;
-        ViewPlane vp = world.getViewPlane();
+        ViewPlane vp = world.getVp();
         Ray       ray = new Ray().setOrigin(eye);
         int       depth = 0;
         Point2D   sp;           // sample point in a unit square
@@ -38,7 +38,7 @@ public class Pinhole extends Camera {
                     ray.setDirection(rayDirection(
                             vp.pixelSize * (col - 0.5 * vp.hres + sp.x),
                             vp.pixelSize * (row - 0.5 * vp.vres + sp.y)));
-                    radiance += world.getTracer().trace(ray, depth);
+                    radiance = radiance.add(world.getTracer().trace(ray, depth));
                 }
                 radiance = radiance.div(vp.getNumSamples()).mul(exposureTime);
             }
@@ -46,11 +46,11 @@ public class Pinhole extends Camera {
     }
 
     private Vector3D rayDirection(Point2D p) {
-        return u.mul(p.x).add(v.mul(p.y)).sub(w.mul(viewPlaneDistance)).normalize();
+        return u.mul(p.x).add(v.mul(p.y)).sub(w.mul(viewPlaneDistance)).normalVector();
     }
 
     private Vector3D rayDirection(double x, double y) {
-        return u.mul(x).add(v.mul(y)).sub(w.mul(viewPlaneDistance)).normalize();
+        return u.mul(x).add(v.mul(y)).sub(w.mul(viewPlaneDistance)).normalVector();
     }
 
 

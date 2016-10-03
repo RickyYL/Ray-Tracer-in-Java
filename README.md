@@ -1,6 +1,7 @@
 # Ray Tracer in Java
 
 * Current version: 0.5
+* Build environment: mac OS X 10.11, IntelliJ IDEA
 
 ## Introduction
 
@@ -12,6 +13,8 @@ overloading hence it's super ugly to implement a Math library in Java).
 ## Current Process
 
 * Sep 28, 2016: Working on `Sampler` classes. Correlation with `World` and `ViewPlane` needs to be fixed.
+* Oct 1, 2016: Beginning to write rendering methods with materials, lights, and BRDFs.
+* Oct 1, 2016: Writing unit tests for all classes.
 
 ## Style List
 
@@ -24,3 +27,4 @@ guide line is to make all classes manageable.
 ## TODO List
 
 * Improving all classes' constructors, especially providing new builder factory constructors.
+* Maintenance of getters and setters.

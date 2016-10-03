@@ -14,6 +14,8 @@ import world.World;
 public class Main {
     public static void main(String... args) {
 
+
+
         World w = new World(new ViewPlane(200, 200, 1.0, 1.0, 1, new Jittered(25)));
         w.addObject(new Plane(new Point3D(0, 0, 70), new Normal(1, 1, 1), RgbColor.BLUE));
         w.addObject(new Sphere(new Point3D(0, 0, 50), 400));

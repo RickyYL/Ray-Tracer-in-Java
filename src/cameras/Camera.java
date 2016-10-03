@@ -68,9 +68,9 @@ abstract public class Camera {
      * Computes the uvw-coordinate, aka, the camera coordinate.
      */
     void uvw() {
-        w = eye.sub(lookat).normalize();
-        u = up.cross(w).normalize();
-        v = w.cross(u).normalize();
+        w = eye.sub(lookat).normalVector();
+        u = up.cross(w).normalVector();
+        v = w.cross(u).normalVector();
     }
 
 /*--------------------------------------------------------------*\

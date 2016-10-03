@@ -24,4 +24,14 @@ public class SingleSphere extends Tracer {
         else
             return RgbColor.BLACK;
     }
+
+    @Override
+    public RgbColor trace(Ray ray, int depth) {
+        return null;
+    }
+
+    @Override
+    public RgbColor trace(Ray ray, Double tmin, int depth) {
+        return null;
+    }
 }

@@ -1,6 +1,6 @@
 package materials;
 
-import BRDFs.Lambertian;
+import brdfs.Lambertian;
 import lights.Light;
 import utilities.RgbColor;
 import utilities.ShadeRec;
@@ -16,16 +16,16 @@ public class Matte extends Material {
 
     public Matte() {
         super();
-        this.ambientBRDF = new Lambertian();
-        this.diffuseBRDF = new Lambertian();
+//        this.ambientBRDF = new Lambertian();
+//        this.diffuseBRDF = new Lambertian();
     }
 
     public void setKa(double k) {
-        ambientBRDF.setDiffuseCoeff(k);
+        ambientBRDF.setDiffuseReflectionCoefficient(k);
     }
 
     public void setKd(double k) {
-        diffuseBRDF.setDiffuseCoeff(k);
+        diffuseBRDF.setDiffuseReflectionCoefficient(k);
     }
 
     public void setCd(RgbColor k) {
@@ -47,7 +47,7 @@ public class Matte extends Material {
 
         for (Light l : sr.world.getLights()) {
             Vector3D wi = l.getDirection(sr);
-            double ndotwi = sr.normal.dotProduct(wi);
+            double ndotwi = sr.normal.mul(wi);
             if (ndotwi > 0.0)
                 L = L.add(diffuseBRDF.f(sr, wo, wi).mul(l.irradiance(sr)).mul(ndotwi));
         }
