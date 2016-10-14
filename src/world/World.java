@@ -1,6 +1,7 @@
 package world;
 
 import cameras.Camera;
+import cameras.Pinhole;
 import geometrics.*;
 import lights.Ambient;
 import lights.Light;
@@ -48,10 +49,21 @@ public class World {
  *  Public methods
 \*--------------------------------------------------------------*/
 
+    public void build() {
+
+
+        // ...
+
+        camera = new Pinhole(new Point3D(300, 400, 500), new Point3D(0, 0, -50), 400);
+    }
+
+
+
+
     /**
      * Uses the given ray to hit every object in <code>objects</code>.
      * @param ray shooting ray
-     * @return    ray-intersection information
+     * @return ray-intersection information
      */
     public ShadeRec hitBareBonesObjects(final Ray ray) {
 

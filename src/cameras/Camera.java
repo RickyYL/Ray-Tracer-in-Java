@@ -4,15 +4,11 @@ import utilities.Point3D;
 import utilities.Vector3D;
 import world.World;
 
-/**
- * @author Yuanqi Li
- * @version 0.9
- */
 abstract public class Camera {
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Fields
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     Point3D  eye;
     Point3D  lookat;
@@ -20,49 +16,51 @@ abstract public class Camera {
     Vector3D u, v, w;
     double   exposureTime = 1.0;
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Constructors
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
+
+    public Camera(Point3D eye) {
+        this.eye = eye;
+        this.lookat = new Point3D(0, 0, 0);
+        this.up = new Vector3D(0, 1, 0);
+        this.uvw();
+    }
 
     public Camera(Point3D eye, Point3D lookat) {
         this.eye = eye;
         this.lookat = lookat;
+        this.up = new Vector3D(0, 1, 0);
+        this.uvw();
     }
 
     public Camera(Point3D eye, Point3D lookat, Vector3D up) {
         this.eye = eye;
         this.lookat = lookat;
         this.up = up;
+        this.uvw();
     }
 
-    public Camera(Point3D eye, Point3D lookat, Vector3D up, Vector3D u, Vector3D v, Vector3D w) {
-        this.eye = eye;
-        this.lookat = lookat;
-        this.up = up;
-        this.u = u;
-        this.v = v;
-        this.w = w;
+    // OpenGL style <code>gluLookat()</code>
+    public Camera(double eyeX, double eyeY, double eyeZ,
+                  double lookatX, double lookatY, double lookatZ,
+                  double upX, double upY, double upZ)
+    {
+        this.eye = new Point3D(eyeX, eyeY, eyeZ);
+        this.lookat = new Point3D(lookatX, lookatY, lookatZ);
+        this.up = new Vector3D(upX, upY, upZ);
+        this.uvw();
     }
 
-    public Camera(Point3D eye, Point3D lookat, Vector3D up, Vector3D u, Vector3D v, Vector3D w, double exposureTime) {
-        this.eye = eye;
-        this.lookat = lookat;
-        this.up = up;
-        this.u = u;
-        this.v = v;
-        this.w = w;
-        this.exposureTime = exposureTime;
-    }
-
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Abstract methods
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     abstract public void renderScene(World w);
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Helper methods
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     /**
      * Computes the uvw-coordinate, aka, the camera coordinate.
@@ -73,9 +71,9 @@ abstract public class Camera {
         v = w.cross(u).normalVector();
     }
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Override methods
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     @Override
     public boolean equals(Object o) {
@@ -121,9 +119,9 @@ abstract public class Camera {
                 '}';
     }
 
-/*--------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Getters and setters
-\*--------------------------------------------------------------*/
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Point3D getEye() {
         return eye;
@@ -179,12 +177,4 @@ abstract public class Camera {
         return w;
     }
 
-    public double getExposureTime() {
-        return exposureTime;
-    }
-
-    public Camera setExposureTime(double exposureTime) {
-        this.exposureTime = exposureTime;
-        return this;
-    }
 }

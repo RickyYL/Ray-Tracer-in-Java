@@ -56,6 +56,10 @@ public class Point2D {
         return new Point2D(x - p.x, y - p.y);
     }
 
+    public Point2D mul(double d)  { return new Point2D(x * d, y * d); }
+
+    public Point2D div(double d)  { return new Point2D(x / d, y / d); }
+
     public double distance(Point2D p) {
         return Math.sqrt((x - p.x) * (x - p.x) + (y - p.y) * (y - p.y));
     }

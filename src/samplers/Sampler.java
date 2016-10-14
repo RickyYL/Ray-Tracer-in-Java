@@ -149,7 +149,7 @@ abstract public class Sampler {
     }
 
 
-    public void mapSamplesToHemisphere(double e) {
+    public void mapSamplesToHemisphere() {
 
     }
 
