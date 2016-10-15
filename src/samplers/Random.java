@@ -4,8 +4,7 @@ import utilities.Maths;
 import utilities.Point2D;
 
 /**
- * @author Yuanqi Li
- * @version 0.5
+ * The random sampler distributes all sample points purely randomly over a pixel.
  */
 public class Random extends Sampler {
 
@@ -14,14 +13,14 @@ public class Random extends Sampler {
 \*--------------------------------------------------------------------------------------------------------------------*/
 
     public Random(int numSamples) {
-        super(numSamples);
+        super((int)Math.pow((int)Math.sqrt(numSamples), 2));
     }
 
     public Random(int numSamples, int numSets) {
-        super(numSamples, numSets);
+        super((int)Math.pow((int)Math.sqrt(numSamples), 2), numSets);
     }
 
-    /*--------------------------------------------------------------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Override methods
 \*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -31,16 +30,6 @@ public class Random extends Sampler {
         for (int p = 0; p < numSets; p++)
             for (int j = 0; j < n; j++)
                 for (int k = 0; k < n; k++)
-                    squareSamples.add(
-                            new Point2D(Maths.randDouble(), Maths.randDouble()));
-    }
-
-/*--------------------------------------------------------------------------------------------------------------------*\
- *  Main
-\*--------------------------------------------------------------------------------------------------------------------*/
-
-    public static void main(String[] args) {
-        Sampler sampler = new Random(1);
-        sampler.squareSamples.forEach(System.out::println);
+                    squareSamples.add(new Point2D(Maths.randDouble(), Maths.randDouble()));
     }
 }

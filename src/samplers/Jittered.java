@@ -3,10 +3,6 @@ package samplers;
 import utilities.Maths;
 import utilities.Point2D;
 
-/**
- * @author Yuanqi Li
- * @version 0.5
- */
 public class Jittered extends Sampler {
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -14,14 +10,14 @@ public class Jittered extends Sampler {
 \*--------------------------------------------------------------------------------------------------------------------*/
 
     public Jittered(int numSamples) {
-        super(numSamples);
+        super((int)Math.pow((int)Math.sqrt(numSamples), 2));
     }
 
     public Jittered(int numSamples, int numSets) {
-        super(numSamples, numSets);
+        super((int)Math.pow((int)Math.sqrt(numSamples), 2), numSets);
     }
 
-    /*--------------------------------------------------------------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Override methods
 \*--------------------------------------------------------------------------------------------------------------------*/
 

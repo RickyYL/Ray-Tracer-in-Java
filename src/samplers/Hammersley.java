@@ -20,7 +20,7 @@ public class Hammersley extends Sampler {
         super(numSamples, numSets);
     }
 
-    /*--------------------------------------------------------------------------------------------------------------------*\
+/*--------------------------------------------------------------------------------------------------------------------*\
  *  Override methods
 \*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -28,7 +28,7 @@ public class Hammersley extends Sampler {
     public void generateSamples() {
         for (int p = 0; p < numSets; p++) {
             for (int j = 0; j < numSamples; j++) {
-                squareSamples.add(new Point2D(1 / j, phi(j)));
+                squareSamples.add(new Point2D((double)j / numSamples, phi(j)));
             }
         }
     }
@@ -40,7 +40,7 @@ public class Hammersley extends Sampler {
     private static double phi(int j) {
         double x = 0.0, f = 0.5;
         while (j != 0) {
-            x += f * (double) ((j & 1));
+            x += f * (double) (j % 2);
             j /= 2;
             f *= 0.5;
         }
