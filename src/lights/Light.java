@@ -4,12 +4,17 @@ import utilities.RgbColor;
 import utilities.ShadeRec;
 import utilities.Vector3D;
 
-/**
- * @author Yuanqi Li
- */
 public abstract class Light {
 
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Fields
+\*--------------------------------------------------------------------------------------------------------------------*/
+
     boolean shadows;
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Constructors
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Light() {
         shadows = false;
@@ -19,23 +24,29 @@ public abstract class Light {
         this.shadows = shadows;
     }
 
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Abstract methods
+\*--------------------------------------------------------------------------------------------------------------------*/
+
+    /**
+     * Returns the direction of incoming light at a hit point.
+     *
+     * @param sr the shading record
+     * @return   the direction of incoming light at the hit point
+     */
     public abstract Vector3D getDirection(ShadeRec sr);
+
+    /**
+     * Returns the incident radiance at a hit point.
+     *
+     * @param sr the shading record
+     * @return   the incident radiance at a hit point
+     */
     public abstract RgbColor irradiance(ShadeRec sr);
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Light light = (Light) o;
-
-        return shadows == light.shadows;
-    }
-
-    @Override
-    public int hashCode() {
-        return (shadows ? 1 : 0);
-    }
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Override methods
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     @Override
     public String toString() {
