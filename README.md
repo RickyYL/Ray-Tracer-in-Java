@@ -1,7 +1,7 @@
 # Ray Tracer in Java
 
 * Current version: 0.5
-* Build environment: mac OS X 10.11, IntelliJ IDEA
+* Build environment: mac OS X 10.11, IntelliJ IDEA 2016.2.4
 
 ## Introduction
 
