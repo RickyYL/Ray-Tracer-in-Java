@@ -96,11 +96,11 @@ public class Vector3D {
         return new Vector3D(y*n.z - z*n.y, z*n.x - x*n.z, x*n.y - y*n.x);
     }
 
-    public double normal() {
+    public double length() {
         return Math.pow(x * x + y * y + z * z, 0.5);
     }
 
-    public double normalSquare() {
+    public double lengthSquaer() {
         return x * x + y * y + z * z;
     }
 

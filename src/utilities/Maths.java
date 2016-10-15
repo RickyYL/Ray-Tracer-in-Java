@@ -1,25 +1,39 @@
 package utilities;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
- * @author Yuanqi Li
+ * This is an idiot math library.
  */
 public class Maths {
 
     public static final double EQN_EPS = 1e-90;
 
+    private static Random randGen = new Random();
+
     public static int randInt() {
-        return new Random().nextInt();
+        return randGen.nextInt();
     }
 
-    public static float randFloat() {
-        return new Random().nextFloat();
+    public static int randInt(int upperBound) {
+        return randGen.nextInt(upperBound);
     }
 
     public static double randDouble() {
-        return new Random().nextDouble();
+        return randGen.nextFloat();
     }
+
+    public static double randDouble(double upperBound) {
+        double randValue = randGen.nextFloat();
+        while (randValue > upperBound)
+            randValue = randGen.nextFloat();
+        return randValue;
+    }
+
+
 
     public boolean isZero(double x) {
         return x > -EQN_EPS && x < EQN_EPS;
@@ -39,4 +53,5 @@ public class Maths {
     public int solveQuartic(double[] c, double[] s) {
         return 0;
     }
+
 }

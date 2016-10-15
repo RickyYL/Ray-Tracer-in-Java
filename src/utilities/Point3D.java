@@ -82,11 +82,11 @@ public class Point3D {
     }
 
     public double normal(Point3D p) {
-        return this.sub(p).normal();
+        return this.sub(p).length();
     }
 
     public double normalSquare(Point3D p) {
-        return this.sub(p).normalSquare();
+        return this.sub(p).lengthSquaer();
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\

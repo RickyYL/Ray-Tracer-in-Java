@@ -14,6 +14,7 @@ public class RgbColor {
     public static final RgbColor GREEN = new RgbColor(0,   255, 0);
     public static final RgbColor BLUE  = new RgbColor(0,   0,   255);
     public static final RgbColor WHITE = new RgbColor(255, 255, 255);
+    public static final RgbColor YELLOW= new RgbColor(255, 255, 0);
 
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Fields
