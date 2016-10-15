@@ -4,19 +4,26 @@ import utilities.RgbColor;
 import utilities.ShadeRec;
 import utilities.Vector3D;
 
-/**
- * @author Yuanqi Li
- */
 public class Ambient extends Light {
 
-    private double scaleFactor;
-    private RgbColor color;
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Fields
+\*--------------------------------------------------------------------------------------------------------------------*/
+
+    private double scaleFactor = 1.0;
+    private RgbColor color = RgbColor.WHITE;
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Constructors
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Ambient() {
         super();
-        this.scaleFactor = 1.0;
-        this.color = RgbColor.WHITE;
     }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Implemented methods
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     /**
      * For ambient light, there is no direction involved, hence it is not called anywhere.
