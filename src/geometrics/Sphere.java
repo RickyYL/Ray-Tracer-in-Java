@@ -2,10 +2,6 @@ package geometrics;
 
 import utilities.*;
 
-/**
- * @author Yuanqi Li
- * @version 0.2
- */
 public class Sphere extends GeometricObject {
 
     Point3D center;
@@ -40,42 +36,20 @@ public class Sphere extends GeometricObject {
         t = (-b - e) / denom;
         if (t > Constants.EPSILON) {
             tmin = t;
-            sr.setNormal(new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalVector());
-            sr.setHitPoint(ray.getOrigin().add(ray.getDirection().mul(t)));
+            sr.hitNormal = new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalVector();
+            sr.hitPoint = ray.getOrigin().add(ray.getDirection().mul(t));
             return true;
         }
 
         t = (-b + e) / denom;
         if (t > Constants.EPSILON) {
             tmin = t;
-            sr.setNormal(new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalVector());
-            sr.setHitPoint(ray.getOrigin().add(ray.getDirection().mul(t)));
+            sr.hitNormal = new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalVector();
+            sr.hitPoint = ray.getOrigin().add(ray.getDirection().mul(t));
             return true;
         }
 
         return false;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Sphere sphere = (Sphere) o;
-
-        if (Double.compare(sphere.getRadius(), getRadius()) != 0) return false;
-        return getCenter() != null ? getCenter().equals(sphere.getCenter()) : sphere.getCenter() == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = getCenter() != null ? getCenter().hashCode() : 0;
-        temp = Double.doubleToLongBits(getRadius());
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
     }
 
     @Override
