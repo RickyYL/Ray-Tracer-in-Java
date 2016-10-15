@@ -12,31 +12,36 @@ public class Lambertian extends BRDF {
  *  Fields
 \*--------------------------------------------------------------------------------------------------------------------*/
 
-    private double diffuseReflectionCoefficient;    // kd
-    private RgbColor diffuseColor;                  // cd
+    /** The diffuse reflection coefficient in range [0, 1]. */
+    private double kd;
+
+    /** The diffuse color. */
+    private RgbColor cd;
 
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Constructors
 \*--------------------------------------------------------------------------------------------------------------------*/
 
-    public Lambertian(double diffuseReflectionCoefficient, RgbColor diffuseColor) {
-        this.diffuseReflectionCoefficient = diffuseReflectionCoefficient;
-        this.diffuseColor = diffuseColor;
-    }
-
-    public Lambertian(Sampler sampler, Normal normal, double diffuseReflectionCoefficient, RgbColor diffuseColor) {
-        super(sampler, normal);
-        this.diffuseReflectionCoefficient = diffuseReflectionCoefficient;
-        this.diffuseColor = diffuseColor;
+    public Lambertian(double kd, RgbColor cd) {
+        this.kd = kd;
+        this.cd = cd;
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Implemented methods
 \*--------------------------------------------------------------------------------------------------------------------*/
 
+    /**
+     * Returns rho<sub>d</sub>/pi.
+     *
+     * @param sr a shade record
+     * @param wi incident radiance direction
+     * @param wo outgoing radiance direction
+     * @return   rho<sub>d</sub>/pi.
+     */
     @Override
     public RgbColor f(ShadeRec sr, Vector3D wi, Vector3D wo) {
-        return diffuseColor.mul(diffuseReflectionCoefficient).mul(Constants.invPI);
+        return cd.mul(kd).mul(Constants.invPI);
     }
 
     /**
@@ -50,7 +55,7 @@ public class Lambertian extends BRDF {
 
     @Override
     public RgbColor rho(ShadeRec sr, Vector3D wo) {
-        return diffuseColor.mul(diffuseReflectionCoefficient);
+        return cd.mul(kd);
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -58,18 +63,18 @@ public class Lambertian extends BRDF {
 \*--------------------------------------------------------------------------------------------------------------------*/
 
     public double getDiffuseReflectionCoefficient() {
-        return diffuseReflectionCoefficient;
+        return kd;
     }
 
-    public void setDiffuseReflectionCoefficient(double diffuseReflectionCoefficient) {
-        this.diffuseReflectionCoefficient = diffuseReflectionCoefficient;
+    public void setDiffuseReflectionCoefficient(double kd) {
+        this.kd = kd;
     }
 
     public RgbColor getDiffuseColor() {
-        return diffuseColor;
+        return cd;
     }
 
-    public void setDiffuseColor(RgbColor diffuseColor) {
-        this.diffuseColor = diffuseColor;
+    public void setDiffuseColor(RgbColor cd) {
+        this.cd = cd;
     }
 }

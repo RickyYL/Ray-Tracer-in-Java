@@ -1,5 +1,7 @@
 package brdfs;
 
+import samplers.Sampler;
+import utilities.Normal;
 import utilities.RgbColor;
 import utilities.ShadeRec;
 import utilities.Vector3D;
@@ -12,6 +14,14 @@ public class GlossySpecular extends BRDF {
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Fields
 \*--------------------------------------------------------------------------------------------------------------------*/
+
+    public GlossySpecular(Sampler sampler, Normal normal) {
+        super(sampler, normal);
+    }
+
+    public GlossySpecular(BRDF f) {
+        super(f);
+    }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Implemented methods
