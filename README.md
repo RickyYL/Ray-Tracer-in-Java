@@ -15,6 +15,7 @@ overloading hence it's super ugly to implement a Math library in Java).
 * Sep 28, 2016: Working on `Sampler` classes. Correlation with `World` and `ViewPlane` needs to be fixed.
 * Oct 1, 2016: Beginning to write rendering methods with materials, lights, and BRDFs.
 * Oct 1, 2016: Writing unit tests for all classes.
+* Oct 15, 2016: Now it works. The following work is to improve samplers, brdfs, and find a good way to test each modulo efficiently.
 
 ## Style List
 

@@ -57,37 +57,37 @@ public class RgbColor {
 \*--------------------------------------------------------------------------------------------------------------------*/
 
     public RgbColor add(RgbColor c) {
-        double r = this.r + c.r; if (r >= 255) r = 255; if (r <= 0) r = 0;
-        double g = this.g + c.g; if (g >= 255) g = 255; if (g <= 0) g = 0;
-        double b = this.b + c.b; if (b >= 255) b = 255; if (b <= 0) b = 0;
+        double r = this.r + c.r;
+        double g = this.g + c.g;
+        double b = this.b + c.b;
         return new RgbColor(r, g, b);
     }
 
     public RgbColor mul(double a) {
-        double r = this.r * a; if (r >= 255) r = 255; if (r <= 0) r = 0;
-        double g = this.g * a; if (g >= 255) g = 255; if (g <= 0) g = 0;
-        double b = this.b * a; if (b >= 255) b = 255; if (b <= 0) b = 0;
+        double r = this.r * a;
+        double g = this.g * a;
+        double b = this.b * a;
         return new RgbColor(r, g, b);
     }
 
     public RgbColor mul(RgbColor c) {
-        double r = this.r * c.r; if (r >= 255) r = 255; if (r <= 0) r = 0;
-        double g = this.g * c.g; if (g >= 255) g = 255; if (g <= 0) g = 0;
-        double b = this.b * c.b; if (b >= 255) b = 255; if (b <= 0) b = 0;
+        double r = this.r * c.r;
+        double g = this.g * c.g;
+        double b = this.b * c.b;
         return new RgbColor(r, g, b);
     }
 
     public RgbColor div(double a) {
-        double r = this.r / a; if (r >= 255) r = 255; if (r <= 0) r = 0;
-        double g = this.g / a; if (g >= 255) g = 255; if (g <= 0) g = 0;
-        double b = this.b / a; if (b >= 255) b = 255; if (b <= 0) b = 0;
+        double r = this.r / a;
+        double g = this.g / a;
+        double b = this.b / a;
         return new RgbColor(r, g, b);
     }
 
     public RgbColor pow(double a) {
-        double r = Math.pow(this.r, a); if (r >= 255) r = 255; if (r <= 0) r = 0;
-        double g = Math.pow(this.g, a); if (g >= 255) g = 255; if (g <= 0) g = 0;
-        double b = Math.pow(this.b, a); if (b >= 255) b = 255; if (b <= 0) b = 0;
+        double r = Math.pow(this.r, a);
+        double g = Math.pow(this.g, a);
+        double b = Math.pow(this.b, a);
         return new RgbColor(r, g, b);
     }
 
