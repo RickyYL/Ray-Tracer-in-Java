@@ -1,8 +1,5 @@
 package utilities;
 
-/**
- * @author Yuanqi Li
- */
 public class Constants {
 
     public static final double PI         = 3.1415926535897932384;

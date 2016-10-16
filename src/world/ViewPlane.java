@@ -18,7 +18,7 @@ public class ViewPlane {
     public int vres;
 
     /** Pixel size. */
-    public double s;
+    public double s = 1.0;
 
     /** Gamma value, default set to 1. */
     private double gamma = 1.0;
@@ -39,11 +39,8 @@ public class ViewPlane {
     public ViewPlane(int hres, int vres) {
         this.hres = hres;
         this.vres = vres;
-        this.s = 1.0;
-        this.gamma = 1.0;
-        this.invGamma = 1.0;
-        this.numSamples = 1;
         this.sampler = new Regular(1);
+        this.numSamples = 1;
     }
 
     public ViewPlane(int hres, int vres, double s, Sampler sampler) {

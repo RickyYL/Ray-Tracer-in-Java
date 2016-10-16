@@ -28,7 +28,7 @@ public class World {
 \*--------------------------------------------------------------------------------------------------------------------*/
 
     private ViewPlane viewPlane;
-    private RgbColor  backgroundColor = RgbColor.BLACK;
+    private RgbColor  backgroundColor = new RgbColor(60, 60, 60);
     private Camera    camera = null;
     private Tracer    tracer = null;
     private Light     ambient = new Ambient();
@@ -62,13 +62,15 @@ public class World {
         image = new BufferedImage(viewPlane.hres, viewPlane.vres, BufferedImage.TYPE_INT_RGB);
         tracer = new RayCast(this);
         ambient = new Ambient();
-        camera = new Pinhole(0, 50, 100, 0, 0, 0, 0, 1, 0, 200);
+        camera = new Pinhole(0, 0, 10, 0, 0, 0, 0, 1, 0, 400);
 
-        objects.add(new Sphere(new Point3D(-40, 0, 0), 50).withMaterial(new Matte(0.005, 0.75, new RgbColor(2, 0, 0))));
-        objects.add(new Sphere(new Point3D(0, 0, 0), 50).withMaterial(new Matte(0.005, 0.75, new RgbColor(0, 2, 0))));
-        objects.add(new Sphere(new Point3D(40, 0, 0), 50).withMaterial(new Matte(0.005, 0.75, new RgbColor(0, 0, 2))));
+        objects.add(new Sphere(new Point3D( 0, 0, 0), 1).withMaterial(new Matte(0.01, 0.75, new RgbColor(2, 0, 0))));
+        objects.add(new Sphere(new Point3D(-3, 0, 0), 1).withMaterial(new Matte(0.01, 0.75, new RgbColor(2, 0, 1))));
+        objects.add(new Sphere(new Point3D( 3, 0, 0), 1).withMaterial(new Matte(0.01, 0.75, new RgbColor(2, 0, 0))));
 
-        lights.add(new PointLight(new Point3D(200, 0, 250)));
+//        lights.add(new PointLight(new Point3D(200, 0, 250)));
+//        lights.add(new PointLight(new Point3D(100, 100, 100)));
+        lights.add(new PointLight(new Point3D(0, -10, 0)));
     }
 
     public void render() {
@@ -89,7 +91,7 @@ public class World {
                 tmin = t;
                 sr.isHit = true;
                 sr.material = o.getMaterial();
-                sr.hitPoint = ray.getOrigin().add(ray.getDirection().mul(t));
+                sr.hitPoint = ray.getOrigin().add(ray.getDirection().mul(sr.t));
                 normal = sr.hitNormal;
                 localHitPoint = sr.localHitPoint;
             }

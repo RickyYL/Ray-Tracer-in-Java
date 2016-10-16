@@ -8,14 +8,26 @@ import utilities.Vector3D;
 
 public class Matte extends Material {
 
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Fields
+\*--------------------------------------------------------------------------------------------------------------------*/
+
     private Lambertian ambientBRDF;
     private Lambertian diffuseBRDF;
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Constructors
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Matte(double ambientKd, double diffuseKd, RgbColor color) {
         super();
         this.ambientBRDF = new Lambertian(ambientKd, color);
         this.diffuseBRDF = new Lambertian(diffuseKd, color);
     }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Implemented methods
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     @Override
     public RgbColor shade(ShadeRec sr) {
@@ -26,11 +38,9 @@ public class Matte extends Material {
         for (Light l : sr.world.getLights()) {
             Vector3D wi = l.getDirection(sr);
             if (sr.hitNormal.mul(wi) > 0.0)
-                L = L.add(
-                        diffuseBRDF.f(sr, wo, wi)
-                                .mul(l.irradiance(sr))
-                                .mul(sr.hitNormal.mul(wi)));
+                L = L.add(diffuseBRDF.f(sr, wo, wi).mul(l.irradiance(sr)).mul(sr.hitNormal.mul(wi)));
         }
+
         return L;
     }
 
@@ -43,6 +53,10 @@ public class Matte extends Material {
     public RgbColor shadePath(ShadeRec st) {
         return null;
     }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Getters and setters
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public void setKa(double ka) {
         ambientBRDF.setDiffuseReflectionCoefficient(ka);
