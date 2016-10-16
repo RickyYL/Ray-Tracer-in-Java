@@ -4,6 +4,11 @@ import utilities.Point3D;
 import utilities.Vector3D;
 import world.World;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 /**
  * Camera class is responsible to render the scene. After setting the camera, it will shot rays through each pixel on a
  * ViewPlane. The rendering process is up to BRDFs and lights. Finally it collects radiance information and draw them on
@@ -18,8 +23,8 @@ abstract public class Camera {
     /** Eye points, i.e., the position of the camera. */
     Point3D eye;
 
-    /** To which point the eye is looking, usually set to <code>(1,0,0)</code> */
-    Point3D lookat = new Point3D(1, 0, 0);
+    /** To which point the eye is looking, usually set to <code>(0,0,0)</code> */
+    Point3D lookat = new Point3D(0, 0, 0);
 
     /** Up vector, usually set to <code>(0,1,0)</code> */
     Vector3D up = new Vector3D(0, 1, 0);
@@ -70,7 +75,14 @@ abstract public class Camera {
                   double upX, double upY, double upZ) {
         this.eye = new Point3D(eyeX, eyeY, eyeZ);
         this.lookat = new Point3D(lookatX, lookatY, lookatZ);
-        this.up = new Vector3D(upX, upY, upZ);
+
+        if (this.eye.x == 0 && this.eye.z == 0 && this.eye.y > 0)
+            this.up = new Vector3D(0, 0, -1);
+        else if (this.eye.x == 0 && this.eye.z == 0 && this.eye.y < 0)
+            this.up = new Vector3D(0, 0, 1);
+        else
+            this.up = new Vector3D(upX, upY, upZ);
+
         this.computeUVW();
     }
 
@@ -100,13 +112,13 @@ abstract public class Camera {
     @Override
     public String toString() {
         return "Camera{" +
-                "eye=" + eye +
-                ", lookat=" + lookat +
-                ", up=" + up +
-                ", u=" + u +
+//                "eye=" + eye +
+//                ", lookat=" + lookat +
+//                ", up=" + up +
+                "u=" + u +
                 ", v=" + v +
                 ", w=" + w +
-                ", exposureTime=" + exposureTime +
+//                ", exposureTime=" + exposureTime +
                 '}';
     }
 
@@ -142,4 +154,11 @@ abstract public class Camera {
         return exposureTime;
     }
 
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Test
+\*--------------------------------------------------------------------------------------------------------------------*/
+
+    public static void main(String[] args) {
+
+    }
 }
