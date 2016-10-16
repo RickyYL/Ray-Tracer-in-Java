@@ -11,9 +11,9 @@ public class PointLight extends Light {
  *  Fields
 \*--------------------------------------------------------------------------------------------------------------------*/
 
-    private double   scaleFactor = 1.0;
-    private RgbColor color = RgbColor.WHITE;
     private Point3D  location;
+    private RgbColor color = RgbColor.WHITE;
+    private double   scaleFactor = 1.0;
 
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Constructors
@@ -23,17 +23,17 @@ public class PointLight extends Light {
         this.location = location;
     }
 
-    public PointLight(double scaleFactor, RgbColor color, Point3D location) {
-        this.scaleFactor = scaleFactor;
-        this.color = color;
+    public PointLight(Point3D location, RgbColor color, double scaleFactor) {
         this.location = location;
+        this.color = color;
+        this.scaleFactor = scaleFactor;
     }
 
-    public PointLight(boolean shadows, double scaleFactor, RgbColor color, Point3D location) {
+    public PointLight(boolean shadows, Point3D location, RgbColor color, double scaleFactor) {
         super(shadows);
-        this.scaleFactor = scaleFactor;
-        this.color = color;
         this.location = location;
+        this.color = color;
+        this.scaleFactor = scaleFactor;
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -43,6 +43,7 @@ public class PointLight extends Light {
     @Override
     public Vector3D getDirection(ShadeRec sr) {
         return location.sub(sr.hitPoint).normalVector();
+//        return sr.hitPoint.sub(location).normalVector();
     }
 
     @Override
