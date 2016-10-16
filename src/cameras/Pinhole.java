@@ -50,28 +50,37 @@ public class Pinhole extends Camera {
     @Override
     public void renderScene(World w) {
 
-        RgbColor  radiance;
         ViewPlane vp = w.getViewPlane();
         Ray       ray = new Ray().setOrigin(eye);
         int       depth = 0;
-        Point2D   sp; // sample point in a unit square
-        Point2D   pp; // sample point on a pixel
 
         vp.s /= zoomFactor;
 
         for (int row = 0; row < vp.vres; row++)
-            for (int col = 0; col < vp.hres; col++) {
-                radiance = RgbColor.BLACK;
+            for (int col = 0; col < vp.hres; col++)
+            {
+                RgbColor radiance = RgbColor.BLACK;
+
                 for (int j = 0; j < vp.getNumSamples(); j++) {
-                    sp = vp.getSampler().nextSampleOnUnitSquare();
+                    Point2D sp = vp.getSampler().nextSampleOnUnitSquare();
                     ray.setDirection(rayDirection(
                             vp.s * (col - 0.5 * vp.hres + sp.x),
                             vp.s * (row - 0.5 * vp.vres + sp.y)));
                     radiance = radiance.add(w.getTracer().trace(ray, depth));
                 }
+
                 radiance = radiance.div(vp.getNumSamples()).mul(exposureTime);
-                System.out.println(radiance);
+                w.getImage().setRGB(col, row, World.maxTo255(radiance).toInt());
             }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", Pinhole{" +
+                "d=" + d +
+                ", zoomFactor=" + zoomFactor +
+                '}';
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -108,4 +117,13 @@ public class Pinhole extends Camera {
     public void setZoomFactor(double zoom) {
         this.zoomFactor = zoom;
     }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Test
+\*--------------------------------------------------------------------------------------------------------------------*/
+
+    public static void main(String[] args) {
+        System.out.println(new Pinhole(0, -10, 0, 0, 0, 0, 0, 1, 0, 5));
+    }
+
 }
