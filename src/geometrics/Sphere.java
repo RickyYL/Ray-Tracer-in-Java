@@ -1,22 +1,41 @@
 package geometrics;
 
+import materials.Material;
 import utilities.*;
 
 public class Sphere extends GeometricObject {
 
-    Point3D center;
-    double  radius;
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Fields
+\*--------------------------------------------------------------------------------------------------------------------*/
 
-    public Sphere(Point3D c, double r) {
-        center = c;
-        radius = r;
+    private Point3D center;
+    private double  radius;
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Constructors
+\*--------------------------------------------------------------------------------------------------------------------*/
+
+    public Sphere(Point3D center, double radius) {
+        this.center = center;
+        this.radius = radius;
+        this.material = null;
     }
 
-    public Sphere(Point3D c, double r, RgbColor co) {
-        center = c;
-        radius = r;
-        color = co;
+    public Sphere withMaterial(Material material) {
+        this.material = material;
+        return this;
     }
+
+    public Sphere(Point3D center, double radius, Material material) {
+        super(material);
+        this.center = center;
+        this.radius = radius;
+    }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Override methods
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     @Override
     public boolean hit(Ray ray, double tmin, ShadeRec sr) {
@@ -59,6 +78,10 @@ public class Sphere extends GeometricObject {
                 ", radius=" + radius +
                 '}';
     }
+
+/*--------------------------------------------------------------------------------------------------------------------*\
+ *  Getters and setters
+\*--------------------------------------------------------------------------------------------------------------------*/
 
     public Point3D getCenter() {
         return center;

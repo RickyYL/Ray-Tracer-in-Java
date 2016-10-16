@@ -30,7 +30,7 @@ public class World {
     private ViewPlane viewPlane;
     private RgbColor  backgroundColor = RgbColor.BLACK;
     private Camera    camera = null;
-    private Tracer    tracer = new MultipleObjects(this);
+    private Tracer    tracer = null;
     private Light     ambient = new Ambient();
 
     private BufferedImage         image;
@@ -58,17 +58,17 @@ public class World {
 
     public void build() {
 
-        viewPlane = new ViewPlane(400, 400, 1.0, new Regular(1));
+        viewPlane = new ViewPlane(400, 400, 1.0, new Regular(4));
         image = new BufferedImage(viewPlane.hres, viewPlane.vres, BufferedImage.TYPE_INT_RGB);
         tracer = new RayCast(this);
         ambient = new Ambient();
         camera = new Pinhole(0, 50, 100, 0, 0, 0, 0, 1, 0, 200);
 
-        Sphere sphere = new Sphere(new Point3D(0, 0, 0), 50);
-        sphere.setMaterial(new Matte(0.25, 0.65, new RgbColor(1, 1, 0)));
+        objects.add(new Sphere(new Point3D(-40, 0, 0), 50).withMaterial(new Matte(0.005, 0.75, new RgbColor(2, 0, 0))));
+        objects.add(new Sphere(new Point3D(0, 0, 0), 50).withMaterial(new Matte(0.005, 0.75, new RgbColor(0, 2, 0))));
+        objects.add(new Sphere(new Point3D(40, 0, 0), 50).withMaterial(new Matte(0.005, 0.75, new RgbColor(0, 0, 2))));
 
-        objects.add(sphere);
-        lights.add(new PointLight(new Point3D(150, 150, 50)));
+        lights.add(new PointLight(new Point3D(200, 0, 250)));
     }
 
     public void render() {
@@ -111,21 +111,6 @@ public class World {
 
     public void addLight(Light light) { lights.add(light); }
 
-    @Deprecated
-    public ShadeRec hitBareBonesObjects(Ray ray) {
-        ShadeRec sr = new ShadeRec(this);
-        double t = Constants.EPSILON;
-        double tmin = Constants.HUGE_VALUE;
-        for (GeometricObject o : objects) {
-            if (o.hit(ray, t, sr) && t < tmin) {
-                sr.isHit = true;
-                tmin = t;
-                sr.color = o.getColor();
-            }
-        }
-        return sr;
-    }
-
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Private methods
 \*--------------------------------------------------------------------------------------------------------------------*/
@@ -151,6 +136,15 @@ public class World {
         });
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    public static RgbColor maxTo255(RgbColor c) {
+        double max = Math.max(c.r, Math.max(c.r, c.g));
+        return max > 255 ? c.div(max) : c;
+    }
+
+    public static RgbColor climpToRed(RgbColor c) {
+        return (c.r > 255 || c.g > 255 || c.b > 255) ? RgbColor.RED : c;
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\

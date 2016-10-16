@@ -1,5 +1,6 @@
 package geometrics;
 
+import materials.Material;
 import utilities.*;
 
 public class Plane extends GeometricObject {
@@ -7,15 +8,10 @@ public class Plane extends GeometricObject {
     Point3D point;
     Normal normal;
 
-    public Plane(Point3D point, Normal normal) {
+    public Plane(Point3D point, Normal normal, Material material) {
+        super(material);
         this.point = point;
         this.normal = normal;
-    }
-
-    public Plane(Point3D point, Normal normal, RgbColor color) {
-        this.point = point;
-        this.normal = normal;
-        super.color = color;
     }
 
     @Override
