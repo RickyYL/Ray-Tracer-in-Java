@@ -53,18 +53,24 @@ public class Sphere extends GeometricObject {
         double e = Math.sqrt(disc);
         double denom = 2.0 * a;
         t = (-b - e) / denom;
+
+        // Smaller root
         if (t > Constants.EPSILON) {
-            tmin = t;
+//            tmin = t;
+            sr.t = t;
             sr.hitNormal = new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalVector();
-            sr.hitPoint = ray.getOrigin().add(ray.getDirection().mul(t));
+            sr.localHitPoint = ray.getOrigin().add(ray.getDirection().mul(t));
             return true;
         }
 
         t = (-b + e) / denom;
+
+        // Larger root
         if (t > Constants.EPSILON) {
-            tmin = t;
+//            tmin = t;
+            sr.t = t;
             sr.hitNormal = new Normal(temp.add(ray.getDirection().mul(t)).div(radius)).normalVector();
-            sr.hitPoint = ray.getOrigin().add(ray.getDirection().mul(t));
+            sr.localHitPoint = ray.getOrigin().add(ray.getDirection().mul(t));
             return true;
         }
 
