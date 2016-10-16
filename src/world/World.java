@@ -14,7 +14,10 @@ import utilities.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +49,7 @@ public class World {
 
     public World(ViewPlane viewPlane) {
         this.viewPlane = viewPlane;
-        this.image = new BufferedImage(viewPlane.vres + 1, viewPlane.hres + 1, BufferedImage.TYPE_INT_RGB);
+        this.image = new BufferedImage(viewPlane.hres, viewPlane.vres, BufferedImage.TYPE_INT_RGB);
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -55,31 +58,22 @@ public class World {
 
     public void build() {
 
-        viewPlane = new ViewPlane(20, 20, 1.0, new Regular(1));
+        viewPlane = new ViewPlane(400, 400, 1.0, new Regular(1));
+        image = new BufferedImage(viewPlane.hres, viewPlane.vres, BufferedImage.TYPE_INT_RGB);
         tracer = new RayCast(this);
         ambient = new Ambient();
-        camera = new Pinhole(0, 0, 100, 0, 0, 0, 0, 1, 0, 850);
+        camera = new Pinhole(0, 50, 100, 0, 0, 0, 0, 1, 0, 200);
 
-        Sphere sphere = new Sphere(new Point3D(10, -5, 0), 27);
-        sphere.setMaterial(new Matte(0.25, 0.65, RgbColor.YELLOW));
+        Sphere sphere = new Sphere(new Point3D(0, 0, 0), 50);
+        sphere.setMaterial(new Matte(0.25, 0.65, new RgbColor(1, 1, 0)));
 
         objects.add(sphere);
-        lights.add(new PointLight(new Point3D(100, 50, 150)));
+        lights.add(new PointLight(new Point3D(150, 150, 50)));
     }
 
-    @Deprecated
-    public ShadeRec hitBareBonesObjects(Ray ray) {
-        ShadeRec sr = new ShadeRec(this);
-        double t = Constants.EPSILON;
-        double tmin = Constants.HUGE_VALUE;
-        for (GeometricObject o : objects) {
-            if (o.hit(ray, t, sr) && t < tmin) {
-                sr.isHit = true;
-                tmin = t;
-                sr.color = o.getColor();
-            }
-        }
-        return sr;
+    public void render() {
+        this.camera.renderScene(this);
+        windowManager(viewPlane.hres, viewPlane.vres, image);
     }
 
     public ShadeRec hitObjects(Ray ray) {
@@ -117,37 +111,46 @@ public class World {
 
     public void addLight(Light light) { lights.add(light); }
 
+    @Deprecated
+    public ShadeRec hitBareBonesObjects(Ray ray) {
+        ShadeRec sr = new ShadeRec(this);
+        double t = Constants.EPSILON;
+        double tmin = Constants.HUGE_VALUE;
+        for (GeometricObject o : objects) {
+            if (o.hit(ray, t, sr) && t < tmin) {
+                sr.isHit = true;
+                tmin = t;
+                sr.color = o.getColor();
+            }
+        }
+        return sr;
+    }
+
 /*--------------------------------------------------------------------------------------------------------------------*\
  *  Private methods
 \*--------------------------------------------------------------------------------------------------------------------*/
 
-    @Deprecated
-    private void displayPixel(int row, int column, RgbColor pixelColor) {
-        if (pixelColor.equals(RgbColor.RED)) {
-            System.out.print(Console.ANSI_RED + "**" + Console.ANSI_RESET);
-        } else if (pixelColor.equals(RgbColor.GREEN)) {
-            System.out.print(Console.ANSI_GREEN + "**" + Console.ANSI_RESET);
-        } else if (pixelColor.equals(RgbColor.BLUE)) {
-            System.out.print(Console.ANSI_BLUE + "**" + Console.ANSI_RESET);
-        } else
-            System.out.print("  ");
-    }
-
-    private void displayImage() {
-        JFrame frame = new JFrame("image");
-        frame.getContentPane().add(new JPanel() {
-            public void paint(Graphics g) {
-                g.drawImage(image, 0, 0, this);
+    /**
+     * Displays the rendered image onto the screen.
+     */
+    static void windowManager(int hres, int vres, BufferedImage image) {
+        JFrame frame = new JFrame("Image");
+        frame.getContentPane().add(BorderLayout.CENTER, new JPanel() {
+            protected void paintComponent(Graphics g) {
+                g.drawImage(image, 0, 0, null);
             }
         });
-        frame.setSize(viewPlane.vres, viewPlane.hres);
+        frame.getContentPane().setPreferredSize(new Dimension(hres, vres));
+        frame.pack();
         frame.setResizable(false);
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+                    System.exit(0);
+            }
+        });
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
-    }
-
-    private void displayInfo() {
-        objects.forEach(System.out::println);
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*\
@@ -160,6 +163,7 @@ public class World {
 
     public void setViewPlane(ViewPlane viewPlane) {
         this.viewPlane = viewPlane;
+        this.image = new BufferedImage(viewPlane.hres, viewPlane.vres, BufferedImage.TYPE_INT_RGB);
     }
 
     public Camera getCamera() {
